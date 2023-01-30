@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
+    <script src="./scripts/script.js"></script>
+    <title>Racket Explained | Home</title>
+</head>
+<body>
+    <header>
+        <h1>Racket Explained</h1>
+        <p>A reference guide and FAQ for CSCI 301 students.</p>
+    </header>
+    <nav id="nav-menu">
+        <h2>Links</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="faq.html">Racket FAQ</a></li>
+            <li><a href="functionguide.html">Common Functions</a></li>
+            <li><a href="formatter.html">Bracket Helper</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+        </ul>
+    </nav>
+    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <main>
+        <h2>Home</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aliquam voluptatibus tempore eum, necessitatibus vel, reiciendis eligendi asperiores quibusdam tenetur atque cumque earum, ipsum natus. Animi, vel quasi odio et nemo, dolorem consectetur maiores velit ipsum ex voluptate quo ducimus numquam, doloribus reprehenderit mollitia quas odit ab excepturi. Corrupti, exercitationem ratione maxime atque officia quasi quod quis obcaecati. Sequi, officia!</p>
+        <pre><code>#lang racket
+
+(define say-hi
+  (lambda (name)
+    (display
+     (string-append "Hello " name "!\n"))))
+
+(say-hi "World")</code></pre>
+    </main>
+    <footer>
+        <h2>Racket Explained</h2>
+    </footer>
+</body>
+</html>

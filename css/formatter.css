@@ -1,0 +1,50 @@
+textarea, #outbox {
+    box-sizing: border-box;
+    display: block;
+    resize: vertical;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+#codebox {
+    width: 100%;
+    height: 100px;
+}
+
+#gobutton {
+    display: block;
+    height: 60px;
+    margin-block: 10px;
+    margin-inline: auto;
+    width: 100px;
+}
+
+#outboxandlabel {
+    /* width: 100%; */
+}
+
+#outbox {
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    font-family: "Roboto Mono", monospace;
+}
+
+@media screen and (min-width: 768px) {
+    #gobutton {
+        flex-basis: 100px;
+        margin: 20px;
+        height: 40px;
+    }
+
+    #outputdiv {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #outboxandlabel {
+        flex: 1;
+    }
+}

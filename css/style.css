@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    font-family: "Roboto Slab", sans-serif;
+}
+
+header {
+    background-color: #53d;
+    padding: 1em;
+    color: white;
+}
+
+header h1 {
+    margin: 0;
+}
+
+#nav-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 64px;
+    height: 56px;
+    background-color: white;
+    border: 2px solid black;
+    font-size: 20pt;
+    text-align: center;
+    line-height: 0;
+    cursor: pointer;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+    transition: left 0.5s;
+}
+
+nav.open {
+    left: 0;
+}
+
+nav h2 {
+    text-align: center;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    list-style: none;
+}
+
+nav ul li {
+    display: contents;
+}
+
+nav ul a {
+    flex: 1;
+    flex-basis: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+nav ul a:hover {
+    background-color: #ffffff88;
+}
+
+main {
+    padding-top: 20px;
+    padding-bottom: 120px;
+    padding-inline: 10%;
+}
+
+pre, form {
+    margin-block: 40px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #def;
+    font-size: small;
+}
+
+pre {
+    overflow-x: auto;
+}
+
+code {
+    font-family: "Roboto Mono", monospace;
+    color: #53d;
+}
+
+kbd {
+    padding: 5px;
+    border-radius: 5px;
+    background: #ddd;
+}
+
+dt {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: large;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+section {
+    margin-left: 10px;
+}
+
+footer {
+    background-color: #ddd;
+    height: 120px;
+    padding: 20px;
+    text-align: center;
+    color: #888;
+}
+
+/* Responsive nav menu */
+@media screen and (min-width: 768px) {
+    #nav-button {
+        visibility: hidden;
+    }
+
+    nav {
+        position: sticky;
+        top: 0;
+        left: 0;
+    }
+
+    nav h2 {
+        position: absolute;
+        margin: 0;
+        left: 20px;
+        top: 50%;
+        line-height: 0;
+    }
+
+    nav ul {
+        flex-flow: row nowrap;
+        width: 70%;
+        height: 64px;
+        margin: auto;
+    }
+
+    main {
+        padding-inline: 15%;
+    }
+
+    pre {
+        font-size: large;
+    }
+}

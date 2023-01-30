@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/formatter.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
+    <script src="./scripts/script.js"></script>
+    <title>Racket Explained | Bracket Helper</title>
+</head>
+
+<body>
+    <header>
+        <h1>Racket Explained</h1>
+        <p>A reference guide and FAQ for CSCI 301 students.</p>
+    </header>
+    <nav id="nav-menu">
+        <h2>Links</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="faq.html">Racket FAQ</a></li>
+            <li><a href="functionguide.html">Common Functions</a></li>
+            <li><a href="formatter.html">Bracket Helper</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+        </ul>
+    </nav>
+    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <main>
+        <h2>Bracket Helper</h2>
+        <p>One of the biggest issues people encounter with learning to code in Racket is code readability. Because of Racket's unconventional syntax, and because the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> is a little convoluted, many students tend to forego all formatting practices entirely. This tends to backfire epically later in the form of requiring you to go on several wild goose chases trying to track down a mismatched pair of parentheses for half an hour, so I created this tool to help you recover from these situations.</p>
+        <p>Paste your Racket code into the box below and hit "Go!" to highlight it so you can easily see where things aren't lining up:</p>
+
+        <form action="">
+            <div id="inputdiv">
+                <label for="codebox">Paste code in here:</label>
+                <textarea name="codebox" id="codebox" cols="102" rows="30"></textarea>
+            </div>
+            <hr>
+            <div id="outputdiv">
+                <input id="gobutton" type="button" value="Go!">
+                <div id="outboxandlabel">
+                    <label for="outbox">Result:</label>
+                    <div id="outbox">
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p>Tip: Although you can't auto-format, you can press <kbd>Ctrl</kbd> + <kbd>I</kbd> to auto-indent your file in DrRacket.</p>
+
+    </main>
+    <footer>
+        <h2>Racket Explained</h2>
+    </footer>
+</body>
+
+</html>
