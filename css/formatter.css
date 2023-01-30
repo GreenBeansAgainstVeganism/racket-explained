@@ -21,10 +21,6 @@ textarea, #outbox {
     width: 100px;
 }
 
-#outboxandlabel {
-    /* width: 100%; */
-}
-
 #outbox {
     width: 100%;
     height: 200px;
