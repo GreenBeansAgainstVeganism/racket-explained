@@ -1,17 +1,42 @@
 body {
     margin: 0;
     font-family: "Roboto Slab", sans-serif;
-    color: #214;
+    color: #332255;
 }
 
 header {
-    background-color: #53d;
+    background-color: #5749d1;
     padding: 1em;
+    color: white;
+    position: relative;
+}
+
+#logo {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translatey(-50%);
+}
+
+/* #logo {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translatey(-50%);
+} */
+
+header a {
+    text-decoration: none;
     color: white;
 }
 
 header h1 {
     margin: 0;
+    margin-right: 120px;
+}
+
+header p {
+    margin-right: 120px;
 }
 
 #nav-button {
@@ -20,7 +45,7 @@ header h1 {
     right: 0;
     width: 64px;
     height: 56px;
-    background-color: #22113388;
+    background-color: #33225588;
     border: none;
     border-bottom-left-radius: 10px;
     font-size: 20pt;
@@ -76,7 +101,7 @@ nav ul a {
     align-items: center;
     text-align: center;
     text-decoration: none;
-    color: #214;
+    color: inherit;
 }
 
 nav ul a:hover {
@@ -84,20 +109,51 @@ nav ul a:hover {
 }
 
 main {
-    padding-top: 20px;
     padding-bottom: 120px;
     padding-inline: 10%;
 }
 
+main a:link, footer a:link {
+    color: #5749d1;
+}
+
+main a:visited, footer a:visited {
+    color: #5749d1;
+    /* color: #d66393; */
+}
+
+main a:hover, footer a:hover {
+    color: #a1ddcd;
+}
+
+main p, main dl * {
+    line-height: 170%;
+}
+
+main h2 {
+    margin-top: 60px;
+    border-left: 8px solid #f9accc;
+    padding-left: 10px;
+    margin-left: -18px;
+}
+
+main h3 {
+    border-left: 6px solid #a1ddcd;
+    padding-left: 10px;
+    margin-left: -16px;
+}
+
 main h4 {
-    text-decoration: underline solid #f6a;
+    border-left: 5px solid #5749d1;
+    padding-left: 10px;
+    margin-left: -15px;
 }
 
 pre, form {
     margin-block: 40px;
     padding: 20px;
     border-radius: 20px;
-    background-color: #def;
+    background-color: #ddeeff;
     font-size: small;
 }
 
@@ -107,7 +163,58 @@ pre {
 
 code {
     font-family: "Roboto Mono", monospace;
-    color: #53d;
+    color: #5749d1;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+figure {
+    margin: 0;
+}
+
+figcaption {
+    color: #888;
+    font-style: italic;
+    margin-top: -30px;
+    margin-bottom: 40px;
+    margin-inline: 1em;
+}
+
+.docs-link {
+    float: right;
+    font-style: italic;
+}
+
+.docs-link:before {
+    content: "\0027A5 Official docs page";
+}
+
+.comment {
+    color: #2c9f80;
+}
+
+.note {
+    color: #888;
+}
+
+.output {
+    color: #332255;
+}
+
+.error {
+    color: #e5162b;
+}
+
+.highlight {
+    background-color: #ffff44;
+    border-radius: 3px;
 }
 
 kbd {
@@ -127,24 +234,49 @@ table {
 }
 
 th, td {
-    border: 1px solid #214;
+    border: 1px solid #332255;
     padding: 5px;
 }
 
 section {
-    margin-left: 10px;
+    margin-left: 2em;
 }
 
 footer {
     background-color: #ddd;
-    height: 120px;
     padding: 20px;
+    padding-bottom: 80px;
     text-align: center;
     color: #888;
 }
 
+footer a:hover {
+    color: #2c9f80;
+}
+
+footer ul {
+    display: flex;
+    flex-flow: row wrap;
+    width: 70%;
+    margin: auto;
+    padding: 0;
+    column-gap: 3em;
+    row-gap: 1em;
+}
+
+footer ul li {
+    text-align: left;
+    flex-basis: 300px;
+    flex-grow: 1;
+    word-break: break-word;
+}
+
 /* Responsive nav menu */
 @media screen and (min-width: 768px) {
+    * {
+        scroll-margin-top: 80px;
+    }
+
     #nav-button {
         visibility: hidden;
     }

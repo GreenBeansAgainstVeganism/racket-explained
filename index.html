@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,19 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <script src="./scripts/script.js"></script>
     <title>Racket Explained | Home</title>
 </head>
+
 <body>
     <header>
-        <h1>Racket Explained</h1>
+        <a href="index.html"><img id="logo" src="./assets/logo.png" width="103" height="103" alt="Racket Logo"></a>
+        <h1>
+            <a href="index.html">
+                Racket Explained
+            </a>
+        </h1>
         <p>A reference guide and FAQ for CSCI 301 students.</p>
     </header>
     <nav id="nav-menu">
@@ -29,7 +37,7 @@
     <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
     <main>
         <h2>Home</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aliquam voluptatibus tempore eum, necessitatibus vel, reiciendis eligendi asperiores quibusdam tenetur atque cumque earum, ipsum natus. Animi, vel quasi odio et nemo, dolorem consectetur maiores velit ipsum ex voluptate quo ducimus numquam, doloribus reprehenderit mollitia quas odit ab excepturi. Corrupti, exercitationem ratione maxime atque officia quasi quod quis obcaecati. Sequi, officia!</p>
+        <p>Hello! My name is <strong>Sage</strong> and I am a <strong>WWU CS tutor</strong>. I created this website because I found that students tend to have a lot of difficulty learning <span class="linkgen">Racket</span>, and while there are already a lot of great online resources out there, most of them already assume you have at least a certain amount of familiarity with <span class="linkgen">functional programming</span>. This guide will not be quite as comprehensive as those resources, but instead will go more in depth into the topics that I've personally found to be the most challenging to understand. This is meant to be the resource that you can count on when all the others fail you!</p>
         <pre><code>#lang racket
 
 (define say-hi
@@ -38,9 +46,34 @@
      (string-append "Hello " name "!\n"))))
 
 (say-hi "World")</code></pre>
+        <p>
+            Take a look around! If you're interested in learning more about functional programming, its history and purpose, then check out the <a href="faq.html">Frequently Asked Questions</a> page.
+        </p>
+        <p>
+            If you're here to get a better understanding of how a specific function works, the <a href="functionguide.html">Common Function Guide</a> will help you out.
+        </p>
+        <p>
+            There is also a <a href="formatter.html">Bracket Helper</a> tool for fixing mismatched parentheses.
+        </p>
     </main>
     <footer>
         <h2>Racket Explained</h2>
+        <h3>References:</h3>
+        <ul>
+            <li>
+                Graham, Hutton. "Frequently Asked Questions for comp.lang.functional". <a href="http://www.cs.nott.ac.uk/~pszgmh/faq.html">http://www.cs.nott.ac.uk/~pszgmh/faq.html</a>
+            </li>
+            <li>
+                Official Racket Documentation. <a href="https://docs.racket-lang.org/">https://docs.racket-lang.org/</a>
+            </li>
+            <li>
+                Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
+            </li>
+            <li>
+                Racket Logo. <a href="https://racket-lang.org/img/racket-logo.svg">https://racket-lang.org/img/racket-logo.svg</a>
+            </li>
+        </ul>
     </footer>
 </body>
+
 </html>

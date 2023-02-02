@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,19 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <script src="./scripts/script.js"></script>
     <title>Racket Explained | Racket FAQ</title>
 </head>
+
 <body>
     <header>
-        <h1>Racket Explained</h1>
+        <a href="index.html"><img id="logo" src="./assets/logo.png" width="103" height="103" alt="Racket Logo"></a>
+        <h1>
+            <a href="index.html">
+                Racket Explained
+            </a>
+        </h1>
         <p>A reference guide and FAQ for CSCI 301 students.</p>
     </header>
     <nav id="nav-menu">
@@ -28,20 +36,109 @@
     <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
     <main>
         <h2>Racket Frequently Asked Questions</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aliquam voluptatibus tempore eum, necessitatibus vel, reiciendis eligendi asperiores quibusdam tenetur atque cumque earum, ipsum natus. Animi, vel quasi odio et nemo, dolorem consectetur maiores velit ipsum ex voluptate quo ducimus numquam, doloribus reprehenderit mollitia quas odit ab excepturi. Corrupti, exercitationem ratione maxime atque officia quasi quod quis obcaecati. Sequi, officia!</p>
-        <dl>
-            <dt>Lorem ipsum dolor sit amet consectetur adipisicing elit?</dt>
-            <dd>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, quidem maiores debitis, soluta illum, quis voluptatibus quaerat ea ipsam ducimus temporibus delectus suscipit minima!</dd>
-            <dt>Lorem ipsum dolor sit amet consectetur adipisicing elit?</dt>
-            <dd>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, quidem maiores debitis, soluta illum, quis voluptatibus quaerat ea ipsam ducimus temporibus delectus suscipit minima!</dd>
-            <dt>Lorem ipsum dolor sit amet consectetur adipisicing elit?</dt>
-            <dd>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, quidem maiores debitis, soluta illum, quis voluptatibus quaerat ea ipsam ducimus temporibus delectus suscipit minima!</dd>
-            <dt>Lorem ipsum dolor sit amet consectetur adipisicing elit?</dt>
-            <dd>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus, quidem maiores debitis, soluta illum, quis voluptatibus quaerat ea ipsam ducimus temporibus delectus suscipit minima!</dd>
-        </dl>
+        <p>This is your one-stop shop for questions that people often have when they first encounter Racket.</p>
+        <h3 id="what-is-functional-programming">What is Functional Programming?</h3>
+        <section>
+            <p>
+                <strong>Functional Programming</strong> is a <strong>programming paradigm</strong>, or way of thinking about language structure, which prioritizes functions as the most important part of the language. Everything in the language is achieved by calling functions, which call other functions, which call even more functions.
+            </p>
+            <p>
+                Some of the differences, in practice, from the <strong>imperative</strong> programming languages you may be used to, are as follows:
+            </p>
+            <ol>
+                <li>
+                    <p>
+                        There are no "statements". Everything is an <strong>expression</strong>, which is to say that it can be <em>evaluated</em>. In languages like <strong>Java</strong> or <strong>C</strong>, certain elements like a variable assignment <code>int x = 2;</code> or a function with a <code>void</code> return type cannot be evaluated to anything. These concepts don't exist in functional programming. Everything returns a value and functions which have side effects other than returning a value are kept to a minimum.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        This means that there is also no such thing as variables, at least in a traditional sense. What <strong>Racket</strong> does have is a concept called an <span class="linkgen">environment</span>.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Functions are a <strong>data type</strong>. They can be passed to one another as parameters and as return values, just like <strong>integers</strong> or <strong>strings</strong> or <strong>booleans</strong>. Other languages often have some limited implementation of this, often referred to as <strong>lambda expressions</strong>, but this is a central concept in functional programming. You will routinely encounter functions which produce other functions, functions which perform operations on functions, functions which apply functions to other functions, and many more bizarre configurations, so it's best to get used to this idea soon.
+                    </p>
+                </li>
+            </ol>
+            <p>
+                Finally, an example to illustrate the difference between imperative and functional programming, written in Javascript (which is not Racket, but it's easy to read and bridges the two paradigms nicely):
+            </p>
+            <pre><code><span class="comment">// Imperative</span>
+
+var array = [1,2,3,4,5,6,7,8,9,10];
+var result = 0;
+
+for(let i = 0; i &lt; array.length; i++) {
+    array[i] = array[i] * array[i];
+    result += array[i];
+}
+
+console.log(result);
+
+<span class="comment">// Functional</span>
+
+console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum + n));</code></pre>
+        </section>
+        <h3 id="what-is-racket">What is Racket?</h3>
+        <section>
+            <p>Racket is a <strong>functional programming language</strong> which is a descendant of a language called <strong>Lisp</strong>. Its website lists its main use cases as web applications, math/statistics, and databases. One big feature that sets Racket apart from other related languages is its language module feature, (the little <code>#lang racket</code> that you see at the top of every program) which allows you to specify which flavor of the language you're using. Racket is really a collection of closely related languages all built from the same base language.</p>
+        </section>
+        <h3 id="lisp-dialects">No actually, why are we talking about Racket? My class uses Scheme/Clojure/etc.</h3>
+        <section>
+            <p><strong>Scheme</strong>, <strong>Clojure</strong>, <strong>Racket</strong>, and a few others are all descendant languages of <strong>Lisp</strong>, which is the second-oldest high-level language still in popular use today (the first being <strong>FORTRAN</strong>). Clojure is the newest, created in 2007, while Racket came in 1995, Scheme in 1975 and Lisp back in 1958. They are all similar enough that the distinction won't matter for the purposes of this guide, however they do have some differences in available features. Lisp has a lot of different dialects/descendants that have sprung up over the years because the language is structured in a way that makes it easy to extend, i.e. create new language features using the original language.</p>
+            <p>
+                Note that although these languages all share Lisp as an original ancestor, they are not necessarily descendants of each other. Racket is largely based off of Scheme, but Clojure is its own thing.
+            </p>
+        </section>
+        <h3>How should I format my Racket Code?</h3>
+        <section>
+            <p>
+                Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a condition expression. <strong>DrRacket</strong> will do most of the indenting work for you, so you just have to worry about where to put line breaks.
+            </p>
+        </section>
+        <h3 id="what-is-a-procedure">What is a procedure?</h3>
+        <section>
+            <p>
+                The terms "procedure" and "function" are essentially interchangeable; they refer to the same thing except that the term "function" is typically used to describe a procedure which has been bound to a name in the <span class="linkgen">environment</span>.
+            </p>
+        </section>
+        <h3 id="what-is-an-environment">What is an environment?</h3>
+        <section>
+            <p>
+                An <strong>environment</strong> is a data structure which holds all the associations between names (identifiers) and values that your program is aware of at any given point. Everything that you can refer to by name, including functions and variables all must be "bound" to that name first by registering a name/value pair in the environment.
+            </p>
+            <figure>
+                <pre><code>'((x 10) (y 4) (+ #&lt;procedure&gt;) (- #&lt;procedure&gt;))</code></pre>
+                <figcaption>A very simple environment containing two variables and two functions.</figcaption>
+            </figure>
+            <p>
+                Normally, there are only two times when binding occurs. When you specify the language module at the top of your program (<code>#lang</code>) that binds all the functions and other syntactic elements of the chosen language to their respective names so your program can use them. Secondly, whenever you call a procedure, the names of each of the parameters it takes are bound to the values that you pass in, which is what allows you to use those values in the procedure.
+            </p>
+            <p>
+                This brings up another important concept which is that environments are <strong>scoped</strong>. They live a seperate existence inside every call to a procedure and so any change to an environment only affects the environment in that current scope and lower. So, when parameters are bound to their passed-in values at the start of calling a procedure, those bindings do not exist outside of that procedure's scope.
+            </p>
+            <p>
+                Besides automatic binding, there are a limited number of special functions included in Racket that allow you to manually bind identifiers to values, such as <span class="lingen">define</span> and <span class="lingen">let</span>.
+            </p>
+        </section>
     </main>
     <footer>
         <h2>Racket Explained</h2>
+        <h3>References:</h3>
+        <ul>
+            <li>
+                Graham, Hutton. "Frequently Asked Questions for comp.lang.functional". <a href="http://www.cs.nott.ac.uk/~pszgmh/faq.html">http://www.cs.nott.ac.uk/~pszgmh/faq.html</a>
+            </li>
+            <li>
+                Official Racket Documentation. <a href="https://docs.racket-lang.org/">https://docs.racket-lang.org/</a>
+            </li>
+            <li>
+                Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
+            </li>
+        </ul>
     </footer>
 </body>
+
 </html>

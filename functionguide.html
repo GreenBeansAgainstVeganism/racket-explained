@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,12 +8,19 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <script src="./scripts/script.js"></script>
     <title>Racket Explained | Common Functions</title>
 </head>
+
 <body>
     <header>
-        <h1>Racket Explained</h1>
+        <a href="index.html"><img id="logo" src="./assets/logo.png" width="103" height="103" alt="Racket Logo"></a>
+        <h1>
+            <a href="index.html">
+                Racket Explained
+            </a>
+        </h1>
         <p>A reference guide and FAQ for CSCI 301 students.</p>
     </header>
     <nav id="nav-menu">
@@ -28,9 +36,9 @@
     <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
     <main>
         <h2>Common Function Guide</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos aliquam voluptatibus tempore eum, necessitatibus vel, reiciendis eligendi asperiores quibusdam tenetur atque cumque earum, ipsum natus. Animi, vel quasi odio et nemo, dolorem consectetur maiores velit ipsum ex voluptate quo ducimus numquam, doloribus reprehenderit mollitia quas odit ab excepturi. Corrupti, exercitationem ratione maxime atque officia quasi quod quis obcaecati. Sequi, officia!</p>
+        <p>Here you will find detailed walkthroughs of how to use several of the most confusing <span class="linkgen">Racket</span> functions that are commonly used in assignments. This will by no means be a comprehensive list of all functions, so if the function you're looking for is not here, the <a href="https://docs.racket-lang.org/search/index.html">Racket Docs</a> entry for it is probably sufficient or it's not relevant to your classwork.</p>
         <h3>
-            Index: (Alphabetical)
+            Quick Reference Table: (Alphabetical)
         </h3>
         <table>
             <tr>
@@ -39,39 +47,169 @@
                 <th>Short Description</th>
             </tr>
             <tr>
-                <td><a href="#func-curry">curry</a></td>
-                <td>proc</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus consequatur, consequuntur saepe deserunt quisquam.</td>
+                <td><span class="linkgen">curry</span></td>
+                <td><span class="linkgen">proc</span></td>
+                <td>Modifies a given procedure to be able to continuously consume parameters until it has enough rather than requiring them all at once.</td>
             </tr>
             <tr>
-                <td><a href="#func-define">define</a></td>
-                <td>any</td>
-                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim illum, voluptates sequi neque tempora necessitatibus eum illo voluptatibus eaque earum iusto vero perferendis.</td>
+                <td><span class="linkgen">define</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td><span class="linkgen">Binds</span> an identifier to a value, or a procedure.</td>
             </tr>
             <tr>
-                <td><a href="#func-lambda">lambda</a></td>
-                <td>proc</td>
-                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat perferendis error unde quos id vitae totam consectetur dolor beatae. Quidem itaque quae voluptas tempora.</td>
+                <td><span class="linkgen">lambda</span></td>
+                <td><span class="linkgen">proc</span></td>
+                <td>Returns a new <span class="linkgen">procedure</span> with a specified set of parameters and body.</td>
             </tr>
             <tr>
-                <td><a href="#func-map">map</a></td>
-                <td>list</td>
-                <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet ex quis reiciendis officiis, rerum dicta tempore porro.</td>
+                <td><span class="linkgen">map</span></td>
+                <td><span class="linkgen">list</span></td>
+                <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the list of results.</td>
+            </tr>
+            <tr>
+                <td><span class="linkgen">andmap</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the logical AND of all of the results together.</td>
+            </tr>
+            <tr>
+                <td><span class="linkgen">ormap</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td>Runs every member of a list (or set of members from a set of lists) through a given procedure or returns the logical OR of all of the results together.</td>
             </tr>
         </table>
-
-        <h3>Functions:</h3>
+        <h2>Detailed Descriptions:</h2><br>
+        <h3 id="func-lambda">lambda</h3>
         <section>
-            <h4 id="func-lambda">lambda</h4>
+            
             <pre><code>(lambda (<i>args</i>) <i>body</i> ...)</code></pre>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt accusamus magni tenetur dolorum enim. Nulla commodi hic deleniti doloribus corrupti dolor aliquam, et cupiditate assumenda obcaecati fuga error quo magnam quas quisquam quos fugiat repudiandae ea repellat laudantium fugit voluptas magni. Qui ratione id non. Odio cum vero incidunt magnam?</p>
-        </section><hr>
-        <section>
-            <h4>...</h4>
+
+            <a class="docs-link" href="https://docs.racket-lang.org/reference/lambda.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._lambda%29%29"></a>
+            <h4>Main Overview</h4>
+            <p>
+                The lambda function is often people's first experience with <span class="linkgen">procedures</span>, that is, functions as data values. The name, lambda, comes from the <strong>Lambda Calculus</strong>, which is the formal mathematical system which inspired the whole <span class="linkgen">Lisp</span> family of programming languages.
+            </p>
+            <p>
+                The lambda function is used to create a new procedure. The first parameter, <code>args</code> holds the names of the parameters that the procedure should accept. The second parameter, <code>body</code> holds the expression that the procedure should evaluate.
+            </p>
+
+            <figure>
+                <pre><code><span class="comment">; Procedure which adds 5 to a value</span>
+(lambda (x) (+ x 5)) <span class="note">-&gt; &lt;#procedure&gt;</span>
+
+<span class="comment">; Procedure which takes the average of 2 numbers</span>
+(lambda (a b) (/ (+ a b) 2)) <span class="note">-&gt; &lt;#procedure&gt;</span>
+
+<span class="comment">; Applying a procedure immediately after creation with lambda</span>
+(<span class="highlight">(lambda (x) (+ x 5))</span> 8) <span class="note">-&gt; 13</span>
+
+<span class="comment">; Passing a procedure made with lambda as a parameter to another procedure</span>
+(<span class="linkgen">map</span> <span class="highlight">(lambda (x) (+ x 5))</span> '(1 2 3 4)) <span class="note">-&gt; '(6 7 8 9)</span></code></pre>
+            </figure>
+
+            <h4>Optional Parameters</h4>
+            <p>
+                You can assign default values to parameters, which gives the user the option to skip passing in a value for that parameter. The parameter will then be filled in with whatever the default value is. The syntax looks like this:
+            </p>
+
+            <pre><code><span class="comment">; Procedure with one required parameter and one optional parameter</span>
+(lambda (x [y 5]) (+ x y))
+
+<span class="comment">; Applying that procedure without specifying a value for y</span>
+(<span class="highlight">(lambda (x [y 5]) (+ x y))</span> 11) <span class="note">-> 16</span></code></pre>
+            
+            <p>
+                Note that you must put all optional parameters at the end of your parameter list, after all required parameters, so that the order that parameters are passed in is always clear.
+            </p>
+
+            <figure>
+                <pre><code><span class="comment">; Optional parameter before required parameter</span>
+(lambda (x <span class="highlight">[y 5] z</span>) (+ x (+ y z))) <span class="error">-> SYNTAX ERROR</span></code></pre>
+                <figcaption>What would happen if you called this procedure with 2 parameters? The program could eventually figure out that you meant to pass those values to x and z, but this gets less and less obvious to compute with bigger and more complicated arrangements. It's much more efficient to just have the restriction that all optional parameters come last.</figcaption>
+            </figure>
+
+            <h4>Trailing Bodies</h4>
+            <p>
+                If you have keen eyes you may have noticed the <code>...</code> in the definition of lambda and been wondering what that's all about. Well, as with most places that accept a code body, lambda will accept as many body expressions as you give it. These bodies will be executed one after another, and as is standard for Racket, the <em>last</em> body expression to be evaluated (also called <strong>tail position</strong>) will be the one that supplies the return value for the whole procedure.
+            </p>
+
+            <pre><code>(<span class="highlight">(lambda (x y) (println x) (println y) (+ x y))</span> 4 5)
+<span class="output">&gt; 4&NewLine;&gt; 5</span>
+<span class="note">-&gt; 9</span></code></pre>
+            
         </section>
+        <hr>
+        <h3 id="func-define">define</h3>
+        <section>
+
+            <pre><code>(define <em>id</em> <em>expr</em>)
+(define (<em>head</em> <em>args</em>) <em>body</em> ...)</code></pre>
+
+            <a href="https://docs.racket-lang.org/reference/define.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._define%29%29" class="docs-link"></a>
+            <h4>Main Overview</h4>
+            <p>
+                You can think of the define function as <span class="linkgen">Racket</span>'s version of a global variable/function definition. Define is one of the few functions which does not have a return value. Instead, it is used to <span class="linkgen">bind</span> an identifier <code>id</code> to a value <code>expr</code>. Once bound, you'll be able to refer to that value later in your program using the name that it was bound to, just like when you define a variable in Java or C.
+            </p>
+
+            <figure>
+                <pre><code>(define myvariable 8)
+
+(println myvariable)
+<span class="output">&gt; 8</span></code></pre>
+            </figure>
+
+            <p>
+                Of course, with the help of <span class="linkgen">lambda</span> or any other function that returns a <span class="linkgen">procedure</span>, you can also define functions this way! However, define also has an alternate syntax that is specifically for defining functions, which is kind of like a define and lambda combined. Instead of <code>id</code>, you specify the form that is to be used when calling the function, including its name and parameters. Then, as the second parameter you supply the body of the function. Below are examples of the same function being defined in Java syntax as well as both Racket syntaxes, for clarity:
+            </p>
+
+            <figure>
+                <pre><code><span class="comment">// in Java</span>
+public static var computeAverage(var x, var y)
+{
+    return (x + y) / 2.0;
+}
+
+<hr>
+<span class="comment">; in Racket, with lambda</span>
+(define compute-average <span class="highlight">(<span class="linkgen">lambda</span> (x y) (/ (+ x y) 2))</span>)
+
+<span class="comment">; in Racket, with alternate define syntax</span>
+(define (compute-average x y) (/ (+ x y) 2))</code></pre>
+            </figure>
+
+            <h4>Meta-functions</h4>
+            <p>The alternate syntax of define has a bonus feature that may occasionally be useful if you can wrap your head around it. That is the ability to define <strong>meta-functions</strong>. </p>
+
+            <figure>
+                <pre><code>(define ((increase-by x) y) (+ y x))
+
+((increase-by 5) 4) <span class="note">-&gt; 9</span></code></pre>
+            </figure>
+        </section>
+        <hr>
+        <h3 id="func-map">map</h3>
+        <section>
+        </section>
+        <hr>
+        <h3 id="func-curry">curry</h3>
+        <section>
+        </section>
+        <hr>
     </main>
     <footer>
         <h2>Racket Explained</h2>
+        <h3>References:</h3>
+        <ul>
+            <li>
+                Graham, Hutton. "Frequently Asked Questions for comp.lang.functional". <a href="http://www.cs.nott.ac.uk/~pszgmh/faq.html">http://www.cs.nott.ac.uk/~pszgmh/faq.html</a>
+            </li>
+            <li>
+                Official Racket Documentation. <a href="https://docs.racket-lang.org/">https://docs.racket-lang.org/</a>
+            </li>
+            <li>
+                Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
+            </li>
+        </ul>
     </footer>
 </body>
+
 </html>
