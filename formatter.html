@@ -30,11 +30,11 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="faq.html">Racket FAQ</a></li>
             <li><a href="functionguide.html">Common Functions</a></li>
-            <li><a href="formatter.html">Bracket Helper</a></li>
+            <li><a class="active" href="formatter.html">Bracket Helper</a></li>
             <li><a href="resources.html">Other Resources</a></li>
         </ul>
     </nav>
-    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
     <main>
         <h2>Bracket Helper</h2>
         <p>One of the biggest issues people encounter with learning to code in Racket is code readability. Because of Racket's unconventional syntax, and because the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> is a little convoluted, many students tend to forego all formatting practices entirely. This tends to backfire epically later in the form of requiring you to go on several wild goose chases trying to track down a mismatched pair of parentheses for half an hour, so I created this tool to help you recover from these situations.</p>

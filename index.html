@@ -26,7 +26,7 @@
     <nav id="nav-menu">
         <h2>Links</h2>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a class="active" href="index.html">Home</a></li>
             <li><a href="faq.html">Racket FAQ</a></li>
             <li><a href="functionguide.html">Common Functions</a></li>
             <li><a href="formatter.html">Bracket Helper</a></li>
@@ -34,16 +34,16 @@
         </ul>
         <h2 id="side-menu-title">Racket Explained</h2>
     </nav>
-    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
     <main>
         <h2>Home</h2>
         <p>Hello! My name is <strong>Sage</strong> and I am a <strong>WWU CS tutor</strong>. I created this website because I found that students tend to have a lot of difficulty learning <span class="linkgen">Racket</span>, and while there are already a lot of great online resources out there, most of them already assume you have at least a certain amount of familiarity with <span class="linkgen">functional programming</span>. This guide will not be quite as comprehensive as those resources, but instead will go more in depth into the topics that I've personally found to be the most challenging to understand. This is meant to be the resource that you can count on when all the others fail you!</p>
         <pre><code>#lang racket
 
-(define say-hi
-  (lambda (name)
-    (display
-     (string-append "Hello " name "!\n"))))
+(<span class="linkgen">define</span> say-hi
+  (<span class="linkgen">lambda</span> (name)
+    (println
+     (string-append "Hello " name "!"))))
 
 (say-hi "World")</code></pre>
         <p>
@@ -73,6 +73,8 @@
                 Racket Logo. <a href="https://racket-lang.org/img/racket-logo.svg">https://racket-lang.org/img/racket-logo.svg</a>
             </li>
         </ul>
+        <h3>Disclaimer</h3>
+        <p>I've tried my best to ensure that the information displayed on this website is accurate and not misleading. If you notice any inaccuracies feel free to <a href="mailto:cooks25@wwu.edu">contact</a> me and suggest an edit.</p>
     </footer>
 </body>
 

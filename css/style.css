@@ -1,3 +1,7 @@
+body * {
+    scroll-margin-top: 10px;
+}
+
 body {
     margin: 0;
     font-family: "Roboto Slab", sans-serif;
@@ -55,6 +59,18 @@ header p {
     cursor: pointer;
 }
 
+#nav-button:before {
+    content: "\002630";
+}
+
+#nav-button:active {
+    background-color: #8fc3e488;
+}
+
+#nav-button.open:before {
+    content: "\00FF38";
+}
+
 #side-menu-title {
     color: #888;
     position: absolute;
@@ -66,15 +82,16 @@ header p {
 nav {
     position: fixed;
     top: 0;
-    left: 100%;
-    width: 100%;
+    left: 102%;
+    width: 90%;
     height: 100%;
     background: #ddd;
+    box-shadow: 0 0 6px #00000088;
     transition: left 0.5s;
 }
 
 nav.open {
-    left: 0;
+    left: 10%;
 }
 
 nav h2 {
@@ -85,6 +102,7 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    padding: 4px;
     flex-flow: column nowrap;
     list-style: none;
 }
@@ -96,6 +114,7 @@ nav ul li {
 nav ul a {
     flex: 1;
     flex-basis: 56px;
+    padding-inline: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -108,25 +127,40 @@ nav ul a:hover {
     background-color: #ffffff88;
 }
 
+nav ul a.active {
+    background-color: #4e9dc7;
+    color: white;
+    padding-top: 4px;
+    box-shadow: inset 0 4px 4px #00000088;
+}
+
+nav ul a.active:hover {
+    background-color: #8fc3e4;
+}
+
 main {
     padding-bottom: 120px;
     padding-inline: 10%;
 }
 
-main a:link, footer a:link {
+main a:link,
+footer a:link {
     color: #5749d1;
 }
 
-main a:visited, footer a:visited {
+main a:visited,
+footer a:visited {
     color: #5749d1;
     /* color: #d66393; */
 }
 
-main a:hover, footer a:hover {
+main a:hover,
+footer a:hover {
     color: #a1ddcd;
 }
 
-main p, main dl * {
+main p,
+main dl * {
     line-height: 170%;
 }
 
@@ -149,11 +183,17 @@ main h4 {
     margin-left: -15px;
 }
 
-pre, form {
+/* section {
+    
+} */
+
+pre,
+form {
     margin-block: 40px;
     padding: 20px;
     border-radius: 20px;
     background-color: #ddeeff;
+    /* box-shadow: inset 0 0 6px #00000088; */
     font-size: small;
 }
 
@@ -233,18 +273,16 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #332255;
     padding: 5px;
 }
 
-section {
-    margin-left: 2em;
-}
-
 footer {
     background-color: #ddd;
-    padding: 20px;
+    padding-inline: 15%;
+    padding-top: 20px;
     padding-bottom: 80px;
     text-align: center;
     color: #888;
@@ -257,7 +295,6 @@ footer a:hover {
 footer ul {
     display: flex;
     flex-flow: row wrap;
-    width: 70%;
     margin: auto;
     padding: 0;
     column-gap: 3em;
@@ -273,8 +310,12 @@ footer ul li {
 
 /* Responsive nav menu */
 @media screen and (min-width: 768px) {
-    * {
-        scroll-margin-top: 80px;
+    body * {
+        scroll-margin-top: 88px;
+    }
+
+    header {
+        z-index: 1;
     }
 
     #nav-button {
@@ -287,6 +328,7 @@ footer ul li {
 
     nav {
         position: sticky;
+        width: 100%;
         top: 0;
         left: 0;
     }
@@ -310,7 +352,15 @@ footer ul li {
         padding-inline: 15%;
     }
 
+    section {
+        margin-left: 2em;
+    }
+
     pre {
         font-size: large;
+    }
+
+    footer p {
+        margin-inline: 10%;
     }
 }

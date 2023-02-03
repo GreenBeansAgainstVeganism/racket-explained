@@ -27,13 +27,13 @@
         <h2>Links</h2>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="faq.html">Racket FAQ</a></li>
+            <li><a class="active" href="faq.html">Racket FAQ</a></li>
             <li><a href="functionguide.html">Common Functions</a></li>
             <li><a href="formatter.html">Bracket Helper</a></li>
             <li><a href="resources.html">Other Resources</a></li>
         </ul>
     </nav>
-    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
     <main>
         <h2>Racket Frequently Asked Questions</h2>
         <p>This is your one-stop shop for questions that people often have when they first encounter Racket.</p>
@@ -120,8 +120,40 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 This brings up another important concept which is that environments are <strong>scoped</strong>. They live a seperate existence inside every call to a procedure and so any change to an environment only affects the environment in that current scope and lower. So, when parameters are bound to their passed-in values at the start of calling a procedure, those bindings do not exist outside of that procedure's scope.
             </p>
             <p>
-                Besides automatic binding, there are a limited number of special functions included in Racket that allow you to manually bind identifiers to values, such as <span class="lingen">define</span> and <span class="lingen">let</span>.
+                Besides automatic binding, there are a limited number of special functions included in Racket that allow you to manually bind identifiers to values, such as <span class="linkgen">define</span> and <span class="linkgen">let</span>.
             </p>
+        </section>
+        <h3 id="what-are-pairs-and-lists">What is that period in my list?</h3>
+        <section>
+            <figure>
+                <pre><code>(println (cons 'a 'b))
+<span class="output">&gt; &apos;(a . b)</span></code></pre>
+            </figure>
+            <p>
+                That strange notation is referred to as a <strong>pair</strong>. Pairs are the basic unit of pretty much all data structures in Racket. They consist of a first value and a second value, both of which can be any data type, including more pairs.
+            </p>
+            <p>
+                You may have accidentally created a pair when you were trying to create a <strong>list</strong> using the cons function. Lists are represented in Racket the same way <strong>linked lists</strong> are in Java. A list consists of a chain of pairs, each one holding a value in their first slot and a reference to the next pair in the chain in their second slot. The last pair in the chain holds a value of <code>null</code> in its second slot.
+            </p>
+
+            <figure>
+                <pre><code><span class="comment">; A list:</span>
+&apos;(a b c d e f g)
+
+<span class="comment">; How it is actually represented:</span>
+&apos;(a . (b . (c . (d . (e . (f . (g . null)))))))</code></pre>
+                <figcaption>Additional note: it follows that an empty list <code>'()</code> is actually equivalent to <code>null</code>.</figcaption>
+            </figure>
+
+            <p>
+                Most of the time, you'll just be working with lists, so if you see a period somewhere you've probably misused cons. If you're ever unsure, just remember that with cons, the first parameter should always be a single element and the second parameter should always be a list.
+            </p>
+
+            <figure>
+                <pre><code>(cons &apos;a &apos;(b c)) <span class="note">-&gt; &apos;(a . (b c)) -&gt; &apos;(a b c)</span>
+
+(cons &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
+            </figure>
         </section>
     </main>
     <footer>

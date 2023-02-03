@@ -28,12 +28,12 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="faq.html">Racket FAQ</a></li>
-            <li><a href="functionguide.html">Common Functions</a></li>
+            <li><a class="active" href="functionguide.html">Common Functions</a></li>
             <li><a href="formatter.html">Bracket Helper</a></li>
             <li><a href="resources.html">Other Resources</a></li>
         </ul>
     </nav>
-    <button id="nav-button" onclick="document.getElementById('nav-menu').classList.toggle('open');">&#9776;</button>
+    <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
     <main>
         <h2>Common Function Guide</h2>
         <p>Here you will find detailed walkthroughs of how to use several of the most confusing <span class="linkgen">Racket</span> functions that are commonly used in assignments. This will by no means be a comprehensive list of all functions, so if the function you're looking for is not here, the <a href="https://docs.racket-lang.org/search/index.html">Racket Docs</a> entry for it is probably sufficient or it's not relevant to your classwork.</p>
@@ -94,10 +94,10 @@
 
             <figure>
                 <pre><code><span class="comment">; Procedure which adds 5 to a value</span>
-(lambda (x) (+ x 5)) <span class="note">-&gt; &lt;#procedure&gt;</span>
+(lambda (x) (+ x 5)) <span class="note">-&gt; #&lt;procedure&gt;</span>
 
 <span class="comment">; Procedure which takes the average of 2 numbers</span>
-(lambda (a b) (/ (+ a b) 2)) <span class="note">-&gt; &lt;#procedure&gt;</span>
+(lambda (a b) (/ (+ a b) 2)) <span class="note">-&gt; #&lt;procedure&gt;</span>
 
 <span class="comment">; Applying a procedure immediately after creation with lambda</span>
 (<span class="highlight">(lambda (x) (+ x 5))</span> 8) <span class="note">-&gt; 13</span>
@@ -176,24 +176,122 @@ public static var computeAverage(var x, var y)
 (define (compute-average x y) (/ (+ x y) 2))</code></pre>
             </figure>
 
-            <h4>Meta-functions</h4>
-            <p>The alternate syntax of define has a bonus feature that may occasionally be useful if you can wrap your head around it. That is the ability to define <strong>meta-functions</strong>. </p>
+            <h4>Nested Function Definition</h4>
+            <p>The alternate syntax of define has a bonus feature that may occasionally be useful if you can wrap your head around it. That is the ability to define <strong>nested functions</strong>. </p>
 
             <figure>
                 <pre><code>(define ((increase-by x) y) (+ y x))
 
 ((increase-by 5) 4) <span class="note">-&gt; 9</span></code></pre>
             </figure>
+
+            <p>
+                To better understand what's going on, let's take another look at the define alternate syntax:
+            </p>
+
+            <figure>
+                <pre><code>(define (<em>head</em> <em>args</em>) <em>body</em> ...)</code></pre>
+            </figure>
+
+            <p>
+                What I neglected to point out before is that the <code>head</code> part of this definition is actually recursive. That is, you can replace <code>head</code> with another <code>(head args)</code> as many times as you want and the syntax will still be valid.
+            </p>
+
+            <figure>
+                <pre><code>(define ((<em>head</em> <em>args</em>) <em>args</em>) <em>body</em> ...)
+(define (((<em>head</em> <em>args</em>) <em>args</em>) <em>args</em>) <em>body</em> ...)
+(define ((((<em>head</em> <em>args</em>) <em>args</em>) <em>args</em>) <em>args</em>) <em>body</em> ...)
+...
+in general:
+<em>head</em> -> (<em>head</em> <em>args</em>) or <em>id</em></code></pre>
+                <figcaption>If you're further along in your course, you may recognize that last line as a production rule for a context-free grammar.</figcaption>
+            </figure>
+
+            <p>
+                What does this do though? Well, what's happening is it's defining a function which returns another function, which finally returns a value. It's as if the function <code>(increase-by x)</code> itself is the name of the main function <code>((increase-by x) y)</code>.
+            </p>
+            <p>
+                This is all still just shorthand; it's nothing you couldn't achieve with the basic define syntax and some lambdas, as you can see demonstrated below:
+            </p>
+
+            <figure>
+                <pre><code>; Function from the earlier example
+(define ((increase-by x) y) (+ y x))
+
+; The same function defined with basic syntax
+(define increase-by (<span class="linkgen">lambda</span> (x) <span class="highlight">(<span class="linkgen">lambda</span> (y) (+ y x))</span>))</code></pre>
+                <figcaption>Notice, the first lambda returns a second lambda!</figcaption>
+            </figure>
+
+            <p>
+                Why would we want this? Well, the first syntax up above is much shorter and also clearer about the usage of the function that we're defining. As for why we'd want a nested function like that, there are times when we'd like to define a whole set of related functions, such as <code>increase-by-1</code>, <code>increase-by-10</code>, <code>increase-by-100</code> and this can be a neat and scalable way of doing so.
+            </p>
+
+            <figure>
+                <pre><code>(define ((increase-by x) y) (+ y x))
+
+(define (increase-by-1 y) (increase-by 1))
+(define (increase-by-10 y) (increase-by 10))
+(define (increase-by-100 y) (increase-by 100))
+
+(println (increase-by-100 (increase-by-10 4)))
+<span class="output">&gt; 114</span></code></pre>
+                <figcaption>Of course, this is a pretty silly example since it would be easier just to use the built in <code>+</code> function, but imagine that the task we're trying to accomplish is a little more complex, like matrix multiplication. It would be convenient to just create a function that multiplies by a particular matrix if we know we're going to be doing it a lot. An alternative approach is to use <span class="linkgen">curry</span>.</figcaption>
+            </figure>
         </section>
         <hr>
         <h3 id="func-map">map</h3>
         <section>
+            <figure>
+                <pre><code>(map proc lst ...)</code></pre>
+            </figure>
+            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._map%29%29" class="docs-link"></a>
+            <h4>Main Overview</h4>
+
         </section>
         <hr>
         <h3 id="func-curry">curry</h3>
         <section>
+            <figure>
+                <pre><code>(curry proc)
+(curry proc v ...)</code></pre>
+            </figure>
+            <a href="https://docs.racket-lang.org/reference/procedures.html#%28def._%28%28lib._racket%2Ffunction..rkt%29._curry%29%29" class="docs-link"></a>
+            <h4>Main Overview</h4>
+            <p>
+                Currying is one of the more advanced standard operations in <span class="linkgen">functional programming</span> and it's named after mathematician Haskell Curry (who also has 3 different programming languages named after him). It describes the process of breaking down a procedure so that parameters can be fed to it one by one rather than all at once.
+            </p>
+            <p>
+                When you call <code>curry</code> on a procedure, it returns a <em>curried</em> version of that procedure, which will behave exactly like the original procedure if it is called with the required number of parameters.
+            </p>
+
+            <figure>
+                <pre><code>cons <span class="note">-&gt; #&lt;procedure:cons&gt;</span>
+
+(curry cons) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
+
+(cons 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span>
+
+((curry cons) 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
+            </figure>
+
+            <p>
+                However, if you feed a curried procedure <em>fewer</em> parameters than it requires, it will <em>wait</em>, returning itself (to be precise, a version of itself that remembers the parameters you passed) until it recieves enough parameters, at which point it will finally execute.
+            </p>
+
+            <figure>
+                <pre><code>((curry cons) 2) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
+
+(<span class="highlight">((curry cons) 2)</span> &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
+            </figure>
+        </section><hr>
+        <h3 id="func-andmap">andmap | ormap</h3>
+        <section>
+            <figure>
+                <pre><code>(andmap <em>proc</em> <em>lst</em> ...)
+(ormap <em>proc</em> <em>lst</em> ...)</code></pre>
+            </figure>
         </section>
-        <hr>
     </main>
     <footer>
         <h2>Racket Explained</h2>
