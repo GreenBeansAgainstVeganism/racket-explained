@@ -155,13 +155,13 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 (cons &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
             </figure>
         </section>
-        <h3>Why do I have to put an apostrophe before lists and symbols?</h3>
+        <h3 id="what-is-quoting">Why do I have to put an apostrophe before lists and symbols?</h3>
         <section>
             <p>
-                That notation is referred to as <strong>quoting</strong> in Racket, and its purpose is to signal to the executor that what follows is to be interpreted as a <strong>datum</strong> (singular form of data) as opposed to some other structure. A datum can be a symbol, a boolean, a number, a string, a character, a keyword, a <span class="linkgen">pair</span>, a <span class="linkgen">list</span>, or any other data type.
+                That notation is referred to as <strong>quoting</strong> in Racket, and its purpose is to signal to the executor that what follows is to be interpreted as a <strong>datum</strong> (singular form of data) as opposed to some other structure. A datum can be a <span class="linkgen">symbol</span>, a boolean, a number, a string, a character, a keyword, a <span class="linkgen">pair</span>, a <span class="linkgen">list</span>, or any other data type.
             </p>
             <p>
-                Quoting is necessary when specifying symbol or list values because they would be interpreted as <span class="linkgen">identifiers</span> or expressions otherwise.
+                Quoting is necessary when specifying symbol list or pair values because they would be interpreted as <span class="linkgen">identifiers</span> or expressions otherwise.
             </p>
             <figure>
                 <pre><code>(<span class="linkgen">define</span> x 3)
@@ -174,7 +174,12 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 (println (/ 12 x))
 <span class="output">&gt; 4</span>
 (println &apos;(/ 12 x))
-<span class="output">&gt; &apos;(/ 12 x)</span></code></pre>
+<span class="output">&gt; &apos;(/ 12 x)</span>
+
+<span class="comment">; You do NOT have to quote anything that is enclosed in a larger</span>
+<span class="comment">; list/pair because they are already being interpreted as data</span>
+(println &apos;(a (b c)))
+<span class="output">&gt; &apos;(a (b c))</span></code></pre>
                 <figcaption>
                     The apostrophe is actually a shorthand for the <code>quote</code> function. You can read about this topic in more detail <a href="https://docs.racket-lang.org/guide/quote.html">here</a>.
                 </figcaption>
@@ -208,6 +213,33 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             <p>
                 
             </p>
+        </section>
+        <hr>
+        <h3 id="what-is-a-symbol">What is a symbol and how is it different from a string?</h3>
+        <section>
+            <p>
+                <strong>Symbols</strong> are a data type in Racket that you've probably never encountered in any other language. They are very similar to <strong>strings</strong>, in that they represent a string of characters, but while strings are denoted by surrounding them with double quotes, symbols have no quotes. (A single quote out front is still necessary in most cases to reduce ambiguity; see <span class="linkgen">quoting</span> for details.)
+            </p>
+            <figure>
+                <pre><code><span class="comment">; This is a string</span>
+"Hello World!"
+
+<span class="comment">; This is a symbol</span>
+'Hello-World!</code></pre>
+            </figure>
+            <p>
+                Besides the fact that symbols <strong>cannot contain whitespace characters</strong>, there are two main differences that set these data types apart.
+            </p>
+            <p>
+                The first is how identical values behave. Symbols are guaranteed to be <strong>interned</strong>, which means that if you create two symbols and they have the same characters in the same order, they are the same symbol, and will be computed as equivalent. Strings, however, are not. Each string lives its own existence, and so even if two strings hold exactly the same information, they may evaluate as being not equal if they don't reference the same original object.
+            </p>
+            <p>
+                The second is their usage. While strings are used to handle and manipulate display text, like in most applications, symbols are typically used to handle specifically the names and <span class="linkgen">identifiers</span> of things within the language. For example, the <code>mode</code> and <code>exists</code> flags for the <a href="https://docs.racket-lang.org/reference/file-ports.html#%28def._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._open-output-file%29%29">open-output-file</a> function, which might be specified with an <strong>enum</strong> object in other languages, are specified with symbols. Also, symbols are used to represent identifiers of values and functions when parsing code from data.
+            </p>
+            <figure>
+                <pre><code>(eval '(+ 2 3)) <span class="note">-&gt; 5</span></code></pre>
+                <figcaption>The + is a symbol in this expression, but it's interpreted by <code>eval</code> to represent the + function.</figcaption>
+            </figure>
         </section>
     </main>
     <footer>

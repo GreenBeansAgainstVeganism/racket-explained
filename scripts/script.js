@@ -25,6 +25,8 @@ window.onload = () => {
         binds: 'faq.html#what-is-an-environment',
         identifier: 'faq.html#what-is-an-environment',
         identifiers: 'faq.html#what-is-an-environment',
+        quoting: 'faq.html#what-is-quoting',
+        symbol: 'faq.html#what-is-a-symbol'
     }
     const sections = [...document.getElementsByClassName('linkgen')];
     sections.forEach(s=>{
