@@ -18,10 +18,13 @@ window.onload = () => {
         curry: 'functionguide.html#func-curry',
         andmap: 'functionguide.html#func-andmap',
         ormap: 'functionguide.html#func-andmap',
+        foldl: 'functionguide.html#func-andmap',
         'functional programming': 'faq.html#what-is-functional-programming',
         environment: 'faq.html#what-is-an-environment',
         bind: 'faq.html#what-is-an-environment',
         binds: 'faq.html#what-is-an-environment',
+        identifier: 'faq.html#what-is-an-environment',
+        identifiers: 'faq.html#what-is-an-environment',
     }
     const sections = [...document.getElementsByClassName('linkgen')];
     sections.forEach(s=>{

@@ -83,7 +83,7 @@ nav {
     position: fixed;
     top: 0;
     left: 102%;
-    width: 90%;
+    width: 80%;
     height: 100%;
     background: #ddd;
     box-shadow: 0 0 6px #00000088;
@@ -91,7 +91,7 @@ nav {
 }
 
 nav.open {
-    left: 10%;
+    left: 20%;
 }
 
 nav h2 {
@@ -203,6 +203,7 @@ pre {
 
 code {
     font-family: "Roboto Mono", monospace;
+    font-style: normal;
     color: #5749d1;
     background-color: #eee;
     border-radius: 5px;
@@ -217,6 +218,11 @@ pre code {
 
 figure {
     margin: 0;
+}
+
+figure img {
+    display: block;
+    margin: 2rem auto;
 }
 
 figcaption {
@@ -258,9 +264,10 @@ figcaption {
 }
 
 kbd {
-    padding: 5px;
+    padding: 3px;
     border-radius: 5px;
     background: #ddd;
+    border: 2px outset #eee;
 }
 
 dt {
@@ -297,7 +304,8 @@ footer ul {
     flex-flow: row wrap;
     margin: auto;
     padding: 0;
-    column-gap: 3em;
+    -moz-column-gap: 3em;
+         column-gap: 3em;
     row-gap: 1em;
 }
 
@@ -327,6 +335,7 @@ footer ul li {
     }
 
     nav {
+        position: -webkit-sticky;
         position: sticky;
         width: 100%;
         top: 0;

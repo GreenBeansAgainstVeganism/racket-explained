@@ -47,6 +47,11 @@
                 <th>Short Description</th>
             </tr>
             <tr>
+                <td><span class="linkgen">andmap</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the logical AND of all of the results together.</td>
+            </tr>
+            <tr>
                 <td><span class="linkgen">curry</span></td>
                 <td><span class="linkgen">proc</span></td>
                 <td>Modifies a given procedure to be able to continuously consume parameters until it has enough rather than requiring them all at once.</td>
@@ -55,6 +60,11 @@
                 <td><span class="linkgen">define</span></td>
                 <td><span class="linkgen">any</span></td>
                 <td><span class="linkgen">Binds</span> an identifier to a value, or a procedure.</td>
+            </tr>
+            <tr>
+                <td><span class="linkgen">foldl</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td>Collapses the elements of a list, one by one, starting from the left-most element, into a single value using an arbitrary procedure.</td>
             </tr>
             <tr>
                 <td><span class="linkgen">lambda</span></td>
@@ -67,11 +77,6 @@
                 <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the list of results.</td>
             </tr>
             <tr>
-                <td><span class="linkgen">andmap</span></td>
-                <td><span class="linkgen">any</span></td>
-                <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the logical AND of all of the results together.</td>
-            </tr>
-            <tr>
                 <td><span class="linkgen">ormap</span></td>
                 <td><span class="linkgen">any</span></td>
                 <td>Runs every member of a list (or set of members from a set of lists) through a given procedure or returns the logical OR of all of the results together.</td>
@@ -80,13 +85,13 @@
         <h2>Detailed Descriptions:</h2><br>
         <h3 id="func-lambda">lambda</h3>
         <section>
-            
+
             <pre><code>(lambda (<i>args</i>) <i>body</i> ...)</code></pre>
 
             <a class="docs-link" href="https://docs.racket-lang.org/reference/lambda.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._lambda%29%29"></a>
             <h4>Main Overview</h4>
             <p>
-                The lambda function is often people's first experience with <span class="linkgen">procedures</span>, that is, functions as data values. The name, lambda, comes from the <strong>Lambda Calculus</strong>, which is the formal mathematical system which inspired the whole <span class="linkgen">Lisp</span> family of programming languages.
+                The lambda function is often people's first experience with <span class="linkgen">procedures</span>, that is, functions as data values. The name, lambda, comes from the <strong>Lambda Calculus</strong>, which is the formal mathematical system which originated the concept of doing operations on functions, and inspired the whole <span class="linkgen">Lisp</span> family of programming languages.
             </p>
             <p>
                 The lambda function is used to create a new procedure. The first parameter, <code>args</code> holds the names of the parameters that the procedure should accept. The second parameter, <code>body</code> holds the expression that the procedure should evaluate.
@@ -116,7 +121,7 @@
 
 <span class="comment">; Applying that procedure without specifying a value for y</span>
 (<span class="highlight">(lambda (x [y 5]) (+ x y))</span> 11) <span class="note">-> 16</span></code></pre>
-            
+
             <p>
                 Note that you must put all optional parameters at the end of your parameter list, after all required parameters, so that the order that parameters are passed in is always clear.
             </p>
@@ -135,7 +140,7 @@
             <pre><code>(<span class="highlight">(lambda (x y) (println x) (println y) (+ x y))</span> 4 5)
 <span class="output">&gt; 4&NewLine;&gt; 5</span>
 <span class="note">-&gt; 9</span></code></pre>
-            
+
         </section>
         <hr>
         <h3 id="func-define">define</h3>
@@ -147,13 +152,13 @@
             <a href="https://docs.racket-lang.org/reference/define.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._define%29%29" class="docs-link"></a>
             <h4>Main Overview</h4>
             <p>
-                You can think of the define function as <span class="linkgen">Racket</span>'s version of a global variable/function definition. Define is one of the few functions which does not have a return value. Instead, it is used to <span class="linkgen">bind</span> an identifier <code>id</code> to a value <code>expr</code>. Once bound, you'll be able to refer to that value later in your program using the name that it was bound to, just like when you define a variable in Java or C.
+                You can think of the define function as <span class="linkgen">Racket</span>'s version of a global variable/function definition. Define is one of the few functions which does not have a return value. Instead, it is used to <span class="linkgen">bind</span> an identifier <code>id</code> to a value <code>expr</code>. Once bound, you'll be able to refer to that value later in your program using the name that it was bound to, just like when you define a variable in Java or C. However, these definitions cannot be changed, so they're closer to <strong>constants</strong> in other languages than variables.
             </p>
 
             <figure>
-                <pre><code>(define myvariable 8)
+                <pre><code>(define myconstant 8)
 
-(println myvariable)
+(println myconstant)
 <span class="output">&gt; 8</span></code></pre>
             </figure>
 
@@ -243,11 +248,63 @@ in general:
         <h3 id="func-map">map</h3>
         <section>
             <figure>
-                <pre><code>(map proc lst ...)</code></pre>
+                <pre><code>(map <em>proc</em> <em>lst</em> ...)</code></pre>
             </figure>
             <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._map%29%29" class="docs-link"></a>
             <h4>Main Overview</h4>
+            <p>
+                Map is one of the most fundamental operations that can be done with <span class="linkgen">procedures</span>. It takes procedure, and applies it in sequence to every member of a list, and then returns a list of the results in the same order.
+            </p>
+            <figure>
+                <img src="./assets/figures/fig-map-1.svg" alt="An example expression, (map add1 '(0 2 6 8)), followed by a diagram showing how the input list of numbers are fed into the 'add1' function, represented as a box, and the corresponding outputs are sent to a new list, reading '(1 7 2 9).">
+            </figure>
+            <p>
+                Map is a really useful tool to have at your disposal because in many cases it can greatly simplify things when you would otherwise need to write a loop to iterate through a list. Below are some examples of how you might use the map function:
+            </p>
+            <figure>
+                <pre><code><span class="comment">; Generating the first 10 perfect square numbers</span>
+(map sqr (range 10)) <span class="note">-&gt; &apos;(0 1 4 9 16 25 36 49 64 81)</span>
 
+<span class="comment">; Running a logical test on each element of a list</span>
+(map odd? &apos;(8 2 9 10 13 5 28)) <span class="note">-&gt; &apos;(#f #f #t #f #t #t #f)</span>
+
+<span class="comment">; Appending a string to each element of a list of strings</span>
+(map (<span class="linkgen">lambda</span> (s) (string-append &quot;P&quot; s))
+     &apos;(&quot;ython&quot; &quot;erl&quot; &quot;HP&quot; &quot;ascal&quot; &quot;rolog&quot;))
+<span class="note">-&gt; &apos;(&quot;Python&quot; &quot;Perl&quot; &quot;PHP&quot; &quot;Pascal&quot; &quot;Prolog&quot;)</span></code></pre>
+            </figure>
+            <h4>
+                Multiple Input Lists
+            </h4>
+            <p>
+                Map doesn't just work with procedures that have one input and one output. Notice the <code>...</code> in the function signature up above. Map can accept more than one input list, and if you supply additional ones, map will use them to fill in additional parameters in <code>proc</code>.
+            </p>
+            <figure>
+                <pre><code></code></pre>
+            </figure>
+        </section>
+        <hr>
+        <h3 id="func-andmap">andmap | ormap | foldl</h3>
+        <section>
+            <figure>
+                <pre><code>(andmap <em>proc</em> <em>lst</em> ...)
+(ormap <em>proc</em> <em>lst</em> ...)
+(foldl <em>proc</em> <em>init</em> <em>lst</em> ...)</code></pre>
+            </figure>
+            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._andmap%29%29" class="docs-link"></a>
+            <h4>Main Overview</h4>
+            <p>
+                These three functions are variants of the <span class="linkgen">map</span> function. Like map, they too run a given <span class="linkgen">procedure</span> on every element of a given <span class="linkgen">list</span> (or set of lists). However, rather than a list, these functions return a single value.
+            </p>
+            <p>
+                <strong>andmap</strong> will return true if and only if <code>proc</code> returns true for every element of the list, and false otherwise.
+            </p>
+            <p>
+                <strong>ormap</strong> will return true unless <code>proc</code> returns false for every element of the list, and false otherwise.
+            </p>
+            <p>
+                <strong>foldl</strong> is a more general form of this concept and we'll discuss it further down.
+            </p>
         </section>
         <hr>
         <h3 id="func-curry">curry</h3>
@@ -259,7 +316,7 @@ in general:
             <a href="https://docs.racket-lang.org/reference/procedures.html#%28def._%28%28lib._racket%2Ffunction..rkt%29._curry%29%29" class="docs-link"></a>
             <h4>Main Overview</h4>
             <p>
-                Currying is one of the more advanced standard operations in <span class="linkgen">functional programming</span> and it's named after mathematician Haskell Curry (who also has 3 different programming languages named after him). It describes the process of breaking down a procedure so that parameters can be fed to it one by one rather than all at once.
+                Currying is one of the more advanced standard operations in <span class="linkgen">functional programming</span> and it's named after mathematician Haskell Curry (who also has 3 different programming languages named after him). It describes the process of breaking down a <span class="linkgen">procedure</span> so that parameters can be fed to it one by one rather than all at once.
             </p>
             <p>
                 When you call <code>curry</code> on a procedure, it returns a <em>curried</em> version of that procedure, which will behave exactly like the original procedure if it is called with the required number of parameters.
@@ -280,18 +337,112 @@ in general:
             </p>
 
             <figure>
-                <pre><code>((curry cons) 2) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
+                <pre><code>(<span class="linkgen">define</span> (add-5-numbers a b c d e) (+ a b c d e))
 
-(<span class="highlight">((curry cons) 2)</span> &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
+((curry add-5-numbers) 1) <span class="note">-&gt; #&lt;procedure:curried:add-5-numbers&gt;</span>
+(((curry add-5-numbers) 1) 2 3) <span class="note">-&gt; #&lt;procedure:curried:add-5-numbers&gt;</span>
+((((curry add-5-numbers) 1) 2 3) 4) <span class="note">-&gt; #&lt;procedure:curried:add-5-numbers&gt;</span>
+(((((curry add-5-numbers) 1) 2 3) 4) 5) <span class="note">-&gt; 15</span>
+
+<span class="comment">; You can also pass in parameters with the initial call to curry</span>
+((curry add-5-numbers 1 2 3 4) 5) <span class="note">-&gt; 15</span></code></pre>
+                <figcaption>Note that this means curry can <strong>only</strong> be used with procedures that accept an exact number of parameters, because otherwise it would not know when to stop waiting.</figcaption>
             </figure>
-        </section><hr>
-        <h3 id="func-andmap">andmap | ormap</h3>
-        <section>
+            <h4>Example</h4>
+            <p>
+                So why is this useful? Well, there are often times in a program where you'd like to specify some parameters to a procedure before you specify others. Without curry, you would have to wait until you know every parameter you need to pass to the procedure, and this might mean jumping through a lot of hoops to make sure that all these values are accessible in the same scope. Let's take a look at an example.
+            </p>
             <figure>
-                <pre><code>(andmap <em>proc</em> <em>lst</em> ...)
-(ormap <em>proc</em> <em>lst</em> ...)</code></pre>
+                <pre><code><span class="comment">; This function searches through a list of numbers and returns</span>
+<span class="comment">; true if there exists a set of 3 numbers in the list that form</span>
+<span class="comment">; a pythagorean triple (a^2 + b^2 = c^2).</span>
+(<span class="linkgen">define</span> (contains-pythagorean-triple? A)
+  (contains-pythagorean-triple?-helper A '()))
+
+<span class="comment">; We accomplish this by creating a helper function which does all</span>
+<span class="comment">; the real work and takes an additional parameter: "test-vals"</span>
+
+<span class="comment">; test-vals will be used to store a list of the elements that</span>
+<span class="comment">; are currently being tested for pythagorean triples. This is a</span>
+<span class="comment">; pretty standard algorithm for finding particular subsets of a</span>
+<span class="comment">; list of elements.</span>
+(<span class="linkgen">define</span> (contains-pythagorean-triple?-helper A test-vals)
+  (cond
+    <span class="comment">; Once test-vals has amassed 3 elements, run them through</span>
+    <span class="comment">; is-pythagorean-triple? and return the result.</span>
+    [(= (length test-vals) 3)
+     (is-pythagorean-triple?
+      (first test-vals)
+      (second test-vals)
+      (third test-vals))]
+    <span class="comment">; If we've reached the end of list A, return false.</span>
+    [(empty? A) #f]
+    <span class="comment">; Otherwise, we branch into two recursive calls:</span>
+    <span class="comment">; One where we include (car A) in test-vals, and one</span>
+    <span class="comment">; where we do not include (car A) in test-vals.</span>
+    [else (or
+           <span class="comment">; Case where we don't add (car A) to test-vals</span>
+           (contains-pythagorean-triple?-helper
+            (cdr A) test-vals)
+           <span class="comment">; Case where we do add (car A) to test-vals</span>
+           (contains-pythagorean-triple?-helper
+            (cdr A) (cons (car A) test-vals))
+           )]
+    ))
+
+<span class="comment">; Function to test if 3 numbers form a pythagorean triple</span>
+(<span class="linkgen">define</span> (is-pythagorean-triple? a b c)
+  (let ([a-squared (* a a)]
+        [b-squared (* b b)]
+        [c-squared (* c c)])
+    (cond
+      [(or
+        (= (+ a-squared b-squared) c-squared)
+        (= (+ c-squared a-squared) b-squared)
+        (= (+ b-squared c-squared) a-squared)
+        ) #t]
+      [else #f]
+      )))
+
+<span class="comment">; Some example calls</span>
+(contains-pythagorean-triple? &apos;(3 4 5)) <span class="note">-&gt; #t</span>
+(contains-pythagorean-triple? &apos;(5 12 13)) <span class="note">-&gt; #t</span>
+(contains-pythagorean-triple? &apos;(3 4 6 8)) <span class="note">-&gt; #f</span>
+(contains-pythagorean-triple? &apos;(9 7 4 1 3 11 5)) <span class="note">-&gt; #t</span></code></pre>
+            </figure>
+            <p>
+                Now, this code works just fine. It solves the problem at hand and pretty efficiently as well. However, it is a bit cumbersome having to keep track of this list of elements that we're testing. The following example shows the same function but utilizing curry. Notice how <code>test-vals</code> is nowhere to be seen; instead of having to manually keep track of the elements we're testing, we just immediately pass them into the curried version of <code>is-pythagorean-triple?</code>, which feels a lot cleaner.
+            </p>
+            <figure>
+                <pre><code><span class="comment">; The same function but utilizing curry</span>
+(<span class="linkgen">define</span> (contains-pythagorean-triple? A)
+  (contains-pythagorean-triple?-helper
+   <span class="comment">; We pass A to the helper function as before, but this time,</span>
+   <span class="comment">; instead of passing an empty list for test-vals, we pass a</span>
+   <span class="comment">; freshly curried version of is-pythagorean-triple?</span>
+   A <span class="highlight">(curry is-pythagorean-triple?)</span>
+   ))
+
+(<span class="linkgen">define</span> (contains-pythagorean-triple?-helper A <span class="highlight">curried-test</span>)
+  (cond
+    <span class="comment">; Instead of that bulky expression from the previous example,</span>
+    <span class="comment">; we just check whether curried-test has returned yet and pass</span>
+    <span class="comment">; on the result if it has.</span>
+    [<span class="highlight">(boolean? curried-test) curried-test</span>]
+    [(empty? A) #f]
+    [else (or
+           <span class="comment">; Case where we don't pass (car A) to curried-test</span>
+           (contains-pythagorean-triple?-helper
+            (cdr A) <span class="highlight">curried-test</span>)
+           <span class="comment">; Case where we do pass (car A) to curried-test</span>
+           (contains-pythagorean-triple?-helper
+            (cdr A) <span class="highlight">(curried-test (car A))</span>)
+           )]
+    ))</code></pre>
+                <figcaption>The <code>is-pythagorean-triple?</code> function is not shown here because it's identical to the first example.</figcaption>
             </figure>
         </section>
+
     </main>
     <footer>
         <h2>Racket Explained</h2>
@@ -306,7 +457,12 @@ in general:
             <li>
                 Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
             </li>
+            <li>
+                Racket Logo. <a href="https://racket-lang.org/img/racket-logo.svg">https://racket-lang.org/img/racket-logo.svg</a>
+            </li>
         </ul>
+        <h3>Disclaimer</h3>
+        <p>I've tried my best to ensure that the information displayed on this website is accurate and not misleading. If you notice inaccuracies or have any other suggestions feel free to <a href="https://forms.gle/ffUMm3LiwwdrK4dG8" target="_blank">contact me</a> and suggest an edit.</p>
     </footer>
 </body>
 

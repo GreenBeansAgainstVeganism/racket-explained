@@ -95,7 +95,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
         <h3>How should I format my Racket Code?</h3>
         <section>
             <p>
-                Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a condition expression. <strong>DrRacket</strong> will do most of the indenting work for you, so you just have to worry about where to put line breaks.
+                Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a condition expression. <strong>DrRacket</strong> will do most of the indenting work for you, (you can re-indent your whole file any time using <kbd>Ctrl</kbd> + <kbd>i</kbd>) so you just have to worry about where to put line breaks.
             </p>
         </section>
         <h3 id="what-is-a-procedure">What is a procedure?</h3>
@@ -107,11 +107,11 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
         <h3 id="what-is-an-environment">What is an environment?</h3>
         <section>
             <p>
-                An <strong>environment</strong> is a data structure which holds all the associations between names (identifiers) and values that your program is aware of at any given point. Everything that you can refer to by name, including functions and variables all must be "bound" to that name first by registering a name/value pair in the environment.
+                An <strong>environment</strong> is a data structure which holds all the associations between names and values that your program is aware of at any given point. Everything that you can refer to by name, including functions and parameters all must be "bound" to that name first by registering a name/value pair in the environment. We typically refer to the names as <strong>identifiers</strong>.
             </p>
             <figure>
                 <pre><code>'((x 10) (y 4) (+ #&lt;procedure&gt;) (- #&lt;procedure&gt;))</code></pre>
-                <figcaption>A very simple environment containing two variables and two functions.</figcaption>
+                <figcaption>A very simple environment containing two values and two functions.</figcaption>
             </figure>
             <p>
                 Normally, there are only two times when binding occurs. When you specify the language module at the top of your program (<code>#lang</code>) that binds all the functions and other syntactic elements of the chosen language to their respective names so your program can use them. Secondly, whenever you call a procedure, the names of each of the parameters it takes are bound to the values that you pass in, which is what allows you to use those values in the procedure.
@@ -155,6 +155,60 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 (cons &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
             </figure>
         </section>
+        <h3>Why do I have to put an apostrophe before lists and characters?</h3>
+        <section>
+            <p>
+                That notation is referred to as <strong>quoting</strong> in Racket, and its purpose is to signal to the executor that what follows is to be interpreted as a <strong>datum</strong> as opposed to an expression. A datum is another word for a <strong>literal</strong> value; it's just a value with nothing else attached like a variable name or memory location. A datum can be a symbol, a boolean, a number, a string, a character, a keyword, a <span class="linkgen">pair</span>, a <span class="linkgen">list</span>, or any other data type.
+            </p>
+            <p>
+                Quoting is necessary when specifying symbol or list values because they would be interpreted as identifiers or expressions otherwise.
+            </p>
+            <figure>
+                <pre><code>(<span class="linkgen">define</span> x 3)
+
+(println x)
+<span class="output">&gt; 3</span>
+(println &apos;x)
+<span class="output">&gt; &apos;x</span>
+
+(println (/ 12 x))
+<span class="output">&gt; 4</span>
+(println &apos;(/ 12 x))
+<span class="output">&gt; &apos;(/ 12 x)</span></code></pre>
+                <figcaption>
+                    The apostrophe is actually a shorthand for the <code>quote</code> function. You can read about this topic in more detail <a href="https://docs.racket-lang.org/guide/quote.html">here</a>.
+                </figcaption>
+            </figure>
+        </section>
+        <h3 id="what-is-a-closure">What is a closure?</h3>
+        <section>
+            <p>
+                A <strong>closure</strong> is one of the more elusive concepts that you'll encounter in <span class="linkgen">functional programming</span> languages. It describes a function which makes use of <span class="linkgen">identifiers</span> defined outside of its own scope.
+            </p>
+            <p>
+                How does that even happen? Well, take a look at the following example:
+            </p>
+            <figure>
+                <pre><code><span class="comment">; This defines a function called add-prefix, which</span>
+<span class="comment">; takes a prefix string and returns a procedure that</span>
+<span class="comment">; appends that prefix to a given name.</span>
+(<span class="linkgen">define</span>
+  (add-prefix <span class="highlight">prefix</span>)
+  (<span class="linkgen">lambda</span> (name) (string-append <span class="highlight">prefix</span> " " name)))
+
+<span class="comment">; Using add-prefix to define a new function called add-dr</span>
+(<span class="linkgen">define</span> add-dr (add-prefix "Dr."))
+
+<span class="comment">; using add-dr to add the prefix to a name</span>
+(add-dr "Racket") <span class="note">-&gt; &quot;Dr. Racket&quot;</span></code></pre>
+            </figure>
+            <p>
+                Did you notice something about the lambda expression up above? That's right, it uses the <span class="linkgen">identifier</span> <code>prefix</code>, even though that identifier is not defined within the lambda expression; it's defined right before as a parameter to add-prefix. In other programming languages, this would be impossible! (At least how it's depicted here. You could achieve a similar situation with classes in an object-oriented language.) However, because we can define new procedures/functions smack dab in the middle of an expression, it makes sense that they should be able to use identifiers from their surrounding context.
+            </p>
+            <p>
+                
+            </p>
+        </section>
     </main>
     <footer>
         <h2>Racket Explained</h2>
@@ -169,7 +223,12 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             <li>
                 Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
             </li>
+            <li>
+                Racket Logo. <a href="https://racket-lang.org/img/racket-logo.svg">https://racket-lang.org/img/racket-logo.svg</a>
+            </li>
         </ul>
+        <h3>Disclaimer</h3>
+        <p>I've tried my best to ensure that the information displayed on this website is accurate and not misleading. If you notice inaccuracies or have any other suggestions feel free to <a href="https://forms.gle/ffUMm3LiwwdrK4dG8" target="_blank">contact me</a> and suggest an edit.</p>
     </footer>
 </body>
 
