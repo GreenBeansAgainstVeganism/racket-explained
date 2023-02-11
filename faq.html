@@ -155,13 +155,13 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 (cons &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
             </figure>
         </section>
-        <h3>Why do I have to put an apostrophe before lists and characters?</h3>
+        <h3>Why do I have to put an apostrophe before lists and symbols?</h3>
         <section>
             <p>
-                That notation is referred to as <strong>quoting</strong> in Racket, and its purpose is to signal to the executor that what follows is to be interpreted as a <strong>datum</strong> as opposed to an expression. A datum is another word for a <strong>literal</strong> value; it's just a value with nothing else attached like a variable name or memory location. A datum can be a symbol, a boolean, a number, a string, a character, a keyword, a <span class="linkgen">pair</span>, a <span class="linkgen">list</span>, or any other data type.
+                That notation is referred to as <strong>quoting</strong> in Racket, and its purpose is to signal to the executor that what follows is to be interpreted as a <strong>datum</strong> (singular form of data) as opposed to some other structure. A datum can be a symbol, a boolean, a number, a string, a character, a keyword, a <span class="linkgen">pair</span>, a <span class="linkgen">list</span>, or any other data type.
             </p>
             <p>
-                Quoting is necessary when specifying symbol or list values because they would be interpreted as identifiers or expressions otherwise.
+                Quoting is necessary when specifying symbol or list values because they would be interpreted as <span class="linkgen">identifiers</span> or expressions otherwise.
             </p>
             <figure>
                 <pre><code>(<span class="linkgen">define</span> x 3)
