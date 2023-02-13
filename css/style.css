@@ -1,11 +1,16 @@
+:root {
+    scroll-behavior: smooth;
+}
+
 body * {
     scroll-margin-top: 10px;
 }
 
 body {
     margin: 0;
-    font-family: "Roboto Slab", sans-serif;
+    font-family: "Roboto Slab", Georgia, serif;
     color: #332255;
+    scrollbar-gutter: stable;
 }
 
 header {
@@ -153,7 +158,7 @@ header p {
     filter: drop-shadow(1px 1px 2px #00000088);
 }
 
-#page-nav-menu:hover {
+#page-nav-menu:hover, #page-nav-menu:active {
     left: 0;
 }
 
@@ -201,10 +206,11 @@ header p {
     display: block;
     color: #332255;
     background-color: white;
+    padding: 3px;
     border-radius: 0 3px 3px 0;
     border-left: 4px solid #a1ddcd;
-    padding-left: 4px;
-    margin-left: -4px;
+    padding-left: 6px;
+    margin-left: -6px;
     position: relative;
     left:0;
 }
@@ -352,13 +358,24 @@ dt {
 }
 
 table {
-    border-collapse: collapse;
+    gap: 2px;
+    background-color: #ddeeff;
+    border-radius: 5px;
+}
+
+th {
+    background-color: #8fc3e4;
+    color: white;
+}
+
+td {
+    background-color: white;
 }
 
 th,
 td {
-    border: 1px solid #332255;
     padding: 5px;
+    border-radius: 5px;
 }
 
 footer {

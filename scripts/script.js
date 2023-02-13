@@ -3,24 +3,28 @@ window.onload = () => {
 
     // Dynamically populate page-nav-menu with links to all h3 tags on the page
     const h3tags = [...document.getElementById('content').getElementsByTagName('h3')];
-    const pageNav = document.getElementById('page-nav-links');
-    if(pageNav != null)
+    const pageNav = document.getElementById('page-nav-menu');
+    const pageNavLinks = document.getElementById('page-nav-links');
+
+    if (pageNavLinks != null)
     {
-        if (h3tags.length > 1) {
-            h3tags.forEach(h=>{
+        if (h3tags.length > 1)
+        {
+            h3tags.forEach(h => {
                 const l = document.createElement('a');
                 l.innerText = h.innerText;
-                if(h.id != '') {
-                    l.href = '#'+h.id;
+                if (h.id != '')
+                {
+                    l.href = '#' + h.id;
                 }
                 const child = document.createElement('li');
                 child.appendChild(l);
-                pageNav.appendChild(child);
+                pageNavLinks.appendChild(child);
             });
         }
         else
         {
-            document.getElementById('page-nav-menu').style.visibility = 'hidden';
+            pageNav.style.visibility = 'hidden';
         }
     }
 
@@ -52,7 +56,7 @@ window.onload = () => {
         symbol: 'faq.html#what-is-a-symbol'
     }
     const sections = [...document.getElementsByClassName('linkgen')];
-    sections.forEach(s=>{
+    sections.forEach(s => {
         // Get the url that corresponds with this keyword
         const href = keywords[s.innerHTML.toLowerCase()];
         // If the keyword exists, replace this tag with an anchor, otherwise remove the tag

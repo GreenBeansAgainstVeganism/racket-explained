@@ -110,7 +110,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
         <h3 id="what-is-a-procedure">What is a procedure?</h3>
         <section>
             <p>
-                The terms "procedure" and "function" are essentially interchangeable; they refer to the same thing except that the term "function" is typically used to describe a procedure which has been bound to a name in the <span class="linkgen">environment</span>.
+                The terms "procedure" and "function" are essentially interchangeable; they refer to the same thing except that the term "function" is typically used to describe a procedure which has been bound to an <span class="linkgen">identifier</span> in the <span class="linkgen">environment</span>.
             </p>
         </section>
         <h3 id="what-is-an-environment">What is an environment?</h3>
@@ -217,11 +217,41 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 (add-dr "Racket") <span class="note">-&gt; &quot;Dr. Racket&quot;</span></code></pre>
             </figure>
             <p>
-                Did you notice something about the lambda expression up above? That's right, it uses the <span class="linkgen">identifier</span> <code>prefix</code>, even though that identifier is not defined within the lambda expression; it's defined right before as a parameter to add-prefix. In other programming languages, this would be impossible! (At least how it's depicted here. You could achieve a similar situation with classes in an object-oriented language.) However, because we can define new procedures/functions smack dab in the middle of an expression, it makes sense that they should be able to use identifiers from their surrounding context.
+                Did you notice something about the <span class="linkgen">lambda</span> expression up above? That's right, it uses the <span class="linkgen">identifier</span> <code>prefix</code>, even though that identifier is not defined within the lambda expression; it's defined right before as a parameter to add-prefix. In other programming languages, this would be impossible! (At least how it's depicted here. You could achieve a similar situation with classes in an object-oriented language.) However, because we can define new procedures/functions smack dab in the middle of an expression, it makes sense that they should be able to use identifiers from their surrounding context. That lambda expression is what we refer to as a closure.
             </p>
             <p>
-                
+                We care about closures because they vastly increase what we are able to do with procedures. They allow procedures to have a sort of memory their surrounding environment, even when all direct references to that environment have long since been thrown away. After the second expression up above, the program no longer remembers what value we passed into <code>add-prefix</code>. In fact, there is no way to access that value directly any longer. The <em>only</em> way that value can still be accessed is through <code>add-dr</code>, because it is a closure.
             </p>
+            <p>
+                Closures have some really wacky capabilities if you start to dabble with them in conjunction with the less purely-functional side of Racket. Since they allow a procedure to store persistent data between calls, they can be made to behave in ways that you normally wouldn't associate with procedures/functions, such as this:
+            </p>
+            <figure>
+                <pre><code><span class="comment">; A closure whose return value starts at 1 and</span>
+<span class="comment">; increments by 1 each time it is called</span>
+(<span class="linkgen">define</span> counter
+  (<span class="linkgen">let</span> [(x 0)] <span class="comment">; Creates a local binding of x outside of the lambda's scope</span>
+    (<span class="linkgen">lambda</span> ()
+      (set! x (add1 x)) <span class="comment">; Sets the new value of x to x+1</span>
+      x)))
+
+(counter) <span class="note">-&gt; 1</span>
+(counter) <span class="note">-&gt; 2</span>
+(counter) <span class="note">-&gt; 3</span></code></pre>
+            </figure>
+            <p>
+                Or, this...
+            </p>
+            <figure>
+                <pre><code>(define self-delete
+  (lambda ()
+    (set! self-delete null)
+    (println "hi!")))
+
+(self-delete)
+<span class="output">&gt; hi!</span>
+(self-delete)
+<span class="error">&gt; error: not a procedure</span></code></pre>
+            </figure>
         </section>
         <hr>
         <h3 id="what-is-a-symbol">What is a symbol and how is it different from a string?</h3>
