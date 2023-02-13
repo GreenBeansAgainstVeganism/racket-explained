@@ -6,6 +6,10 @@ window.onload = () => {
     const pageNav = document.getElementById('page-nav-menu');
     const pageNavLinks = document.getElementById('page-nav-links');
 
+    document.body.addEventListener('touchend', ev => {
+        pageNav.classList.toggle('active',pageNav.contains(ev.target));
+    })
+
     if (pageNavLinks != null)
     {
         if (h3tags.length > 1)
