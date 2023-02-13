@@ -6,6 +6,7 @@ window.onload = () => {
     const pageNav = document.getElementById('page-nav-menu');
     const pageNavLinks = document.getElementById('page-nav-links');
 
+    // Necessary event listener to make the side menu work with touch devices
     document.body.addEventListener('touchend', ev => {
         pageNav.classList.toggle('active',pageNav.contains(ev.target));
     })

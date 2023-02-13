@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Slab:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
@@ -220,7 +221,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 Did you notice something about the <span class="linkgen">lambda</span> expression up above? That's right, it uses the <span class="linkgen">identifier</span> <code>prefix</code>, even though that identifier is not defined within the lambda expression; it's defined right before as a parameter to add-prefix. In other programming languages, this would be impossible! (At least how it's depicted here. You could achieve a similar situation with classes in an object-oriented language.) However, because we can define new procedures/functions smack dab in the middle of an expression, it makes sense that they should be able to use identifiers from their surrounding context. That lambda expression is what we refer to as a closure.
             </p>
             <p>
-                We care about closures because they vastly increase what we are able to do with procedures. They allow procedures to have a sort of memory their surrounding environment, even when all direct references to that environment have long since been thrown away. After the second expression up above, the program no longer remembers what value we passed into <code>add-prefix</code>. In fact, there is no way to access that value directly any longer. The <em>only</em> way that value can still be accessed is through <code>add-dr</code>, because it is a closure.
+                We care about closures because they vastly increase what we are able to do with procedures. They allow procedures to have a sort of memory of their surrounding environment, even when all direct references to that environment have long since been thrown away. After the second expression up above, the program no longer remembers what value we passed into <code>add-prefix</code>. In fact, there is no way to access that value directly any longer. The <em>only</em> way that value can still be accessed is through <code>add-dr</code>, because it is a closure.
             </p>
             <p>
                 Closures have some really wacky capabilities if you start to dabble with them in conjunction with the less purely-functional side of Racket. Since they allow a procedure to store persistent data between calls, they can be made to behave in ways that you normally wouldn't associate with procedures/functions, such as this:
