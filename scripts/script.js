@@ -1,6 +1,29 @@
 
 window.onload = () => {
 
+    // Dynamically populate page-nav-menu with links to all h3 tags on the page
+    const h3tags = [...document.getElementById('content').getElementsByTagName('h3')];
+    const pageNav = document.getElementById('page-nav-links');
+    if(pageNav != null)
+    {
+        if (h3tags.length > 1) {
+            h3tags.forEach(h=>{
+                const l = document.createElement('a');
+                l.innerText = h.innerText;
+                if(h.id != '') {
+                    l.href = '#'+h.id;
+                }
+                const child = document.createElement('li');
+                child.appendChild(l);
+                pageNav.appendChild(child);
+            });
+        }
+        else
+        {
+            document.getElementById('page-nav-menu').style.visibility = 'hidden';
+        }
+    }
+
     // Dynamically generate links for all the labelled areas
     const keywords = {
         procedure: 'faq.html#what-is-a-procedure',
@@ -35,4 +58,5 @@ window.onload = () => {
         // If the keyword exists, replace this tag with an anchor, otherwise remove the tag
         s.outerHTML = href ? `<a href="${href}">${s.innerHTML}</a>` : s.innerHTML;
     });
+
 };

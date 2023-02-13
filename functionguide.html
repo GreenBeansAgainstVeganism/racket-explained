@@ -34,10 +34,18 @@
         </ul>
     </nav>
     <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
-    <main>
+    <div class="zero-height">
+        <nav id="page-nav-menu">
+            <h2 id="page-nav-title"></h2>
+            <ul id="page-nav-links">
+                <li><strong><a href="#">Top</a></strong></li>
+            </ul>
+        </nav>
+    </div>
+    <main id="content">
         <h2>Common Function Guide</h2>
         <p>Here you will find detailed walkthroughs of how to use several of the most confusing <span class="linkgen">Racket</span> functions that are commonly used in assignments. This will by no means be a comprehensive list of all functions, so if the function you're looking for is not here, the <a href="https://docs.racket-lang.org/search/index.html">Racket Docs</a> entry for it is probably sufficient or it's not relevant to your classwork.</p>
-        <h3>
+        <h3 id="reference-table">
             Quick Reference Table: (Alphabetical)
         </h3>
         <table>

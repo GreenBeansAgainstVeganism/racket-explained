@@ -34,7 +34,16 @@
         </ul>
     </nav>
     <button id="nav-button" onclick="this.classList.toggle('open');document.getElementById('nav-menu').classList.toggle('open');"></button>
-    <main>
+    <div class="zero-height">
+        <nav id="page-nav-menu">
+            <h2 id="page-nav-title"></h2>
+            <ul id="page-nav-links">
+                <li><strong><a href="#">Top</a></strong></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <main id="content">
         <h2>Racket Frequently Asked Questions</h2>
         <p>This is your one-stop shop for questions that people often have when they first encounter Racket.</p>
         <h3 id="what-is-functional-programming">What is Functional Programming?</h3>
@@ -92,7 +101,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 Note that although these languages all share Lisp as an original ancestor, they are not necessarily descendants of each other. Racket is largely based off of Scheme, but Clojure is its own thing.
             </p>
         </section>
-        <h3>How should I format my Racket Code?</h3>
+        <h3 id="how-to-format">How should I format my Racket Code?</h3>
         <section>
             <p>
                 Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a condition expression. <strong>DrRacket</strong> will do most of the indenting work for you, (you can re-indent your whole file any time using <kbd>Ctrl</kbd> + <kbd>i</kbd>) so you just have to worry about where to put line breaks.
