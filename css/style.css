@@ -455,7 +455,7 @@ footer ul li {
     }
 
     #page-nav-menu ul {
-        max-height: calc(100vh - 8em);
+        max-height: calc(100vh - 15em);
     }
 
     main {

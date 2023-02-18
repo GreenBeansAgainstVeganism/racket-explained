@@ -357,6 +357,10 @@ in general:
 ((curry add-5-numbers 1 2 3 4) 5) <span class="note">-&gt; 15</span></code></pre>
                 <figcaption>Note that this means curry can <strong>only</strong> be used with procedures that accept an exact number of parameters, because otherwise it would not know when to stop waiting.</figcaption>
             </figure>
+            <figure>
+                <img src="./assets/figures/fig-curry-1.svg" alt="curry if it was actually curry flowchart">
+                <figcaption>Curry if it was actually curry...</figcaption>
+            </figure>
             <h4>Example</h4>
             <p>
                 So why is this useful? Well, there are often times in a program where you'd like to specify some parameters to a procedure before you specify others. Without curry, you would have to wait until you know every parameter you need to pass to the procedure, and this might mean jumping through a lot of hoops to make sure that all these values are accessible in the same scope. Let's take a look at an example.
