@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%20Mono:400,700">
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/formatter.js"></script>
     <title>Racket Explained | Bracket Helper</title>
 </head>
 
@@ -42,19 +43,17 @@
         <p>Paste your Racket code into the box below and hit "Go!" to highlight it so you can easily see where things aren't lining up:</p>
 
         <figure>
-            <form action="">
+            <form id="formatter">
                 <div id="inputdiv">
                     <label for="codebox">Paste code in here:</label>
-                    <textarea name="codebox" id="codebox" cols="102" rows="30"></textarea>
+                    <textarea name="codebox" id="codebox" cols="102" rows="30" spellcheck="false" required></textarea>
                 </div>
                 <hr>
                 <div id="outputdiv">
                     <input id="gobutton" type="button" value="Go!">
                     <div id="outboxandlabel">
                         <label for="outbox">Result:</label>
-                        <div id="outbox">
-                            <span style="color: red;">Not yet functional!</span>
-                        </div>
+                        <div id="outbox">Click "Go!" to render</div>
                     </div>
                 </div>
             </form>

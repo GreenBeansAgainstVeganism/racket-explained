@@ -1,5 +1,5 @@
 
-window.onload = () => {
+window.addEventListener('load', () => {
 
     // Dynamically populate page-nav-menu with links to all h3 tags on the page
     const h3tags = [...document.getElementById('content').getElementsByTagName('h3')];
@@ -68,4 +68,4 @@ window.onload = () => {
         s.outerHTML = href ? `<a href="${href}">${s.innerHTML}</a>` : s.innerHTML;
     });
 
-};
+});

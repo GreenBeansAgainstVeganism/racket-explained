@@ -6,6 +6,8 @@ textarea, #outbox {
     border: 1px solid gray;
     border-radius: 3px;
     padding: 3px;
+    overflow-x: scroll;
+    white-space: pre;
 }
 
 #codebox {
@@ -28,6 +30,22 @@ textarea, #outbox {
     font-family: "Roboto Mono", monospace;
 }
 
+#outboxandlabel {
+    max-width: 100%;
+}
+
+#outbox {
+    font-size: large;
+}
+
+#outbox span {
+    border-radius: 3px;
+}
+
+#outbox span.hover {
+    outline: 2px solid #5749d1;
+}
+
 @media screen and (min-width: 768px) {
     #gobutton {
         flex-basis: 100px;
@@ -42,5 +60,6 @@ textarea, #outbox {
 
     #outboxandlabel {
         flex: 1;
+        max-width: calc(100% - 100px);
     }
 }
