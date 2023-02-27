@@ -47,6 +47,7 @@ window.addEventListener('load', () => {
         lambda: 'functionguide.html#func-lambda',
         define: 'functionguide.html#func-define',
         map: 'functionguide.html#func-map',
+        cons: 'functionguide.html#func-cons',
         curry: 'functionguide.html#func-curry',
         andmap: 'functionguide.html#func-andmap',
         ormap: 'functionguide.html#func-andmap',

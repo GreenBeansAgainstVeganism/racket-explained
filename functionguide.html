@@ -61,6 +61,11 @@
                 <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the logical AND of all of the results together.</td>
             </tr>
             <tr>
+                <td><span class="linkgen">cons</span></td>
+                <td><span class="linkgen">pair</span></td>
+                <td>Creates a new pair out of its two parameters.</td>
+            </tr>
+            <tr>
                 <td><span class="linkgen">curry</span></td>
                 <td><span class="linkgen">proc</span></td>
                 <td>Modifies a given procedure to be able to continuously consume parameters until it has enough rather than requiring them all at once.</td>
@@ -92,15 +97,35 @@
             </tr>
         </table>
         <h2>Detailed Descriptions:</h2><br>
+        <h3 id="func-cons">cons</h3>
+        <section>
+
+            <pre class="sectionhead"><code>(cons <em>a</em> <em>b</em>)</code></pre>
+            
+            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28quote._~23~25kernel%29._cons%29%29" class="docs-link" target="_blank"></a>
+            <h4>Main Overview</h4>
+            <p>
+                cons is a very simple function, but it's often misunderstood by first-timers because of a lack of the prerequisite knowledge of how pairs work in <span class="linkgen">Racket</span>. All that cons does is create a new pair with <code>a</code> as its first value and <code>b</code> as its second. Where the confusion arises is that we are often wanting to deal with <strong>lists</strong>, rather than pairs, and so cons behaves slightly differently than we might expect. Check out the FAQ on <span class="linkgen">pairs</span> for a more in-depth explanation.
+            </p>
+
+            <figure>
+                <pre><code>(cons 1 2) <span class="note">-&gt; &apos;(1 . 2)</span>
+(cons &apos;a &apos;b) <span class="note">-&gt; &apos;(a . b)</span>
+(cons 1 &apos;()) <span class="note">-&gt; &apos;(1)</span>
+(cons 1 &apos;(2 3)) <span class="note">-&gt; &apos;(1 2 3)</span>
+(cons &apos;(1 2) 3) <span class="note">-&gt; &apos;((1 2) . 3)</span></code></pre>
+            </figure>
+
+        </section><br>
         <h3 id="func-lambda">lambda</h3>
         <section>
 
-            <pre><code>(lambda (<i>args</i>) <i>body</i> ...)</code></pre>
+            <pre class="sectionhead"><code>(lambda (<i>args</i>) <i>body</i> ...)</code></pre>
 
-            <a class="docs-link" href="https://docs.racket-lang.org/reference/lambda.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._lambda%29%29"></a>
+            <a class="docs-link" href="https://docs.racket-lang.org/reference/lambda.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._lambda%29%29" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
-                The lambda function is often people's first experience with <span class="linkgen">procedures</span>, that is, functions as data values. The name, lambda, comes from the <strong>Lambda Calculus</strong>, which is the formal mathematical system which originated the concept of doing operations on functions, and inspired the whole <span class="linkgen">Lisp</span> family of programming languages.
+                The lambda function is often people's first experience with <span class="linkgen">procedures</span>, that is, functions as data values. The name, lambda, comes from the <strong>Lambda Calculus</strong>, which is the formal mathematical system which originated the concept of doing operations on functions, and inspired the whole <span class="linkgen">Lisp</span> family of programming languages. So, that should give you an idea for how central this function is to everything we do in <span class="linkgen">Racket</span>.
             </p>
             <p>
                 The lambda function is used to create a new procedure. The first parameter, <code>args</code> holds the names of the parameters that the procedure should accept. The second parameter, <code>body</code> holds the expression that the procedure should evaluate.
@@ -155,10 +180,10 @@
         <h3 id="func-define">define</h3>
         <section>
 
-            <pre><code>(define <em>id</em> <em>expr</em>)
+            <pre class="sectionhead"><code>(define <em>id</em> <em>expr</em>)
 (define (<em>head</em> <em>args</em>) <em>body</em> ...)</code></pre>
 
-            <a href="https://docs.racket-lang.org/reference/define.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._define%29%29" class="docs-link"></a>
+            <a href="https://docs.racket-lang.org/reference/define.html#%28form._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._define%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
                 You can think of the define function as <span class="linkgen">Racket</span>'s version of a global variable/function definition. Define is one of the few functions which does not have a return value. Instead, it is used to <span class="linkgen">bind</span> an identifier <code>id</code> to a value <code>expr</code>. Once bound, you'll be able to refer to that value later in your program using the name that it was bound to, just like when you define a variable in Java or C. However, these definitions cannot be changed, so they're closer to <strong>constants</strong> in other languages than variables.
@@ -257,9 +282,9 @@ in general:
         <h3 id="func-map">map</h3>
         <section>
             <figure>
-                <pre><code>(map <em><span class="linkgen">proc</span></em> <em>lst</em> ...)</code></pre>
+                <pre class="sectionhead"><code>(map <em><span class="linkgen">proc</span></em> <em>lst</em> ...)</code></pre>
             </figure>
-            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._map%29%29" class="docs-link"></a>
+            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._map%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
                 Map is one of the most fundamental operations that can be done with <span class="linkgen">procedures</span>. It takes procedure, and applies it in sequence to every member of a list, and then returns a list of the results in the same order.
@@ -296,11 +321,11 @@ in general:
         <h3 id="func-andmap">andmap | ormap | foldl</h3>
         <section>
             <figure>
-                <pre><code>(andmap <em><span class="linkgen">proc</span></em> <em>lst</em> ...)
+                <pre class="sectionhead"><code>(andmap <em><span class="linkgen">proc</span></em> <em>lst</em> ...)
 (ormap <em><span class="linkgen">proc</span></em> <em>lst</em> ...)
 (foldl <em><span class="linkgen">proc</span></em> <em>init</em> <em>lst</em> ...)</code></pre>
             </figure>
-            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._andmap%29%29" class="docs-link"></a>
+            <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._andmap%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
                 These three functions are variants of the <span class="linkgen">map</span> function. Like map, they too run a given <span class="linkgen">procedure</span> on every element of a given <span class="linkgen">list</span> (or set of lists). However, rather than a list, these functions return a single value.
@@ -319,10 +344,10 @@ in general:
         <h3 id="func-curry">curry</h3>
         <section>
             <figure>
-                <pre><code>(curry <em><span class="linkgen">proc</span></em>)
+                <pre class="sectionhead"><code>(curry <em><span class="linkgen">proc</span></em>)
 (curry <em><span class="linkgen">proc</span></em> <em>v</em> ...)</code></pre>
             </figure>
-            <a href="https://docs.racket-lang.org/reference/procedures.html#%28def._%28%28lib._racket%2Ffunction..rkt%29._curry%29%29" class="docs-link"></a>
+            <a href="https://docs.racket-lang.org/reference/procedures.html#%28def._%28%28lib._racket%2Ffunction..rkt%29._curry%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
                 Currying is one of the more advanced standard operations in <span class="linkgen">functional programming</span> and it's named after mathematician Haskell Curry (who also has 3 different programming languages named after him). It describes the process of breaking down a <span class="linkgen">procedure</span> so that parameters can be fed to it one by one rather than all at once.
@@ -332,13 +357,13 @@ in general:
             </p>
 
             <figure>
-                <pre><code>cons <span class="note">-&gt; #&lt;procedure:cons&gt;</span>
+                <pre><code><span class="linkgen">cons</span> <span class="note">-&gt; #&lt;procedure:cons&gt;</span>
 
-(curry cons) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
+(curry <span class="linkgen">cons</span>) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
 
-(cons 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span>
+(<span class="linkgen">cons</span> 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span>
 
-((curry cons) 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
+((curry <span class="linkgen">cons</span>) 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
             </figure>
 
             <p>
@@ -399,7 +424,7 @@ in general:
             (cdr A) test-vals)
            <span class="comment">; Case where we do add (car A) to test-vals</span>
            (contains-pythagorean-triple?-helper
-            (cdr A) (cons (car A) test-vals))
+            (cdr A) (<span class="linkgen">cons</span> (car A) test-vals))
            )]
     ))
 

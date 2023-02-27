@@ -281,6 +281,10 @@ pre {
     overflow-x: auto;
 }
 
+pre.sectionhead {
+    background-color: #ddf5ef;
+}
+
 code {
     font-family: "Roboto Mono", monospace;
     font-style: normal;

@@ -136,14 +136,14 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
         <h3 id="what-are-pairs-and-lists">What is that period in my list?</h3>
         <section>
             <figure>
-                <pre><code>(println (cons 'a 'b))
+                <pre><code>(println (<span class="linkgen">cons</span> 'a 'b))
 <span class="output">&gt; &apos;(a . b)</span></code></pre>
             </figure>
             <p>
-                That strange notation is referred to as a <strong>pair</strong>. Pairs are the basic unit of pretty much all data structures in Racket. They consist of a first value and a second value, both of which can be any data type, including more pairs.
+                That strange notation is referred to as a <strong>pair</strong>. Pairs are the basic unit of pretty much all data structures in <span class="linkgen">Racket</span>. They consist of a first value and a second value, both of which can be any data type, including more pairs.
             </p>
             <p>
-                You may have accidentally created a pair when you were trying to create a <strong>list</strong> using the cons function. Lists are represented in Racket the same way <strong>linked lists</strong> are in Java. A list consists of a chain of pairs, each one holding a value in their first slot and a reference to the next pair in the chain in their second slot. The last pair in the chain holds a value of <code>null</code> in its second slot.
+                You may have accidentally created a pair when you were trying to create a <strong>list</strong> using the cons function. Lists in Racket are represented using the same <strong>linked list</strong> structure you may be familiar with from other classes. A list consists of a chain of pairs, each one holding a value in their first slot and a reference to the next pair in the chain in their second slot. The last pair in the chain holds a value of <code>null</code> in its second slot.
             </p>
 
             <figure>
@@ -156,13 +156,13 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             </figure>
 
             <p>
-                Most of the time, you'll just be working with lists, so if you see a period somewhere you've probably misused cons. If you're ever unsure, just remember that with cons, the first parameter should always be a single element and the second parameter should always be a list.
+                Most of the time, you'll just be working with lists, so if you see a period somewhere you've probably misused <span class="linkgen">cons</span>. If you're ever unsure, just remember that with cons, the first parameter should always be a single element and the second parameter should always be a list.
             </p>
 
             <figure>
-                <pre><code>(cons &apos;a &apos;(b c)) <span class="note">-&gt; &apos;(a . (b c)) -&gt; &apos;(a b c)</span>
+                <pre><code>(<span class="linkgen">cons</span> &apos;a &apos;(b c)) <span class="note">-&gt; &apos;(a . (b c)) -&gt; &apos;(a b c)</span>
 
-(cons &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
+(<span class="linkgen">cons</span> &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
             </figure>
         </section>
         <h3 id="what-is-quoting">Why do I have to put an apostrophe before lists and symbols?</h3>
