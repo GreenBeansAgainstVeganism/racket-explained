@@ -6,6 +6,13 @@ window.addEventListener('load', () => {
 
     // Add listener for gobutton
     gobutton.addEventListener('click', () => {
+        // if the code box is empty. print a help message
+        if(!codebox.value)
+        {
+            outbox.innerHTML = 'Please enter your code into the box above.';
+            return;
+        }
+
         // Generate output html
         outbox.innerHTML = formatBrackets(escapeHTML(codebox.value));
 
@@ -45,7 +52,7 @@ function escapeHTML(raw) {
 }
 
 // The colors that different levels of brackets should be painted
-const COLORS = ['#FFD1D1', '#FFE7D1', '#FEFFD1', '#E5FFD1', '#D1FEFF', '#D1E6FF', '#DCD1FF'];
+const COLORS = ['#FFD1D1', '#FFE7D1', '#FEFFD1', '#E5FFD1', '#D1FAFF', '#D1E6FF', '#DCD1FF'];
 
 /**
  * Formats a piece of text with HTML span tags to highlight each bracketed group in a different color.
