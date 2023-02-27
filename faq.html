@@ -58,17 +58,20 @@
             <ol>
                 <li>
                     <p>
-                        There are no "statements". Everything is an <strong>expression</strong>, which is to say that it can be <em>evaluated</em>. In languages like <strong>Java</strong> or <strong>C</strong>, certain elements like a variable assignment <code>int x = 2;</code> or a function with a <code>void</code> return type cannot be evaluated to anything. These concepts don't exist in functional programming. Everything returns a value and functions which have side effects other than returning a value are kept to a minimum.
+                        There are no "statements". Everything is an <strong>expression</strong>, which is to say that it can be <em>evaluated</em>. In languages like <strong>Java</strong> or <strong>C</strong>, certain elements like a variable assignment <code>int x = 2;</code> or a function with a <code>void</code> return type cannot be evaluated to anything. These concepts don't exist in functional programming. Everything returns a value and that return value is the entire purpose of the expression. Expressions which have side effects other than returning a value, (e.g. assignments, definitions, printing to console, drawing to screen) are kept to an absolute minimum.
                     </p>
                 </li>
                 <li>
                     <p>
-                        This means that there is also no such thing as variables, at least in a traditional sense. What <strong>Racket</strong> does have is a concept called an <span class="linkgen">environment</span>.
+                        This means that there is also no such thing as variables, at least in a traditional sense. Values are kept in the program's memory solely by passing them from expression to expression as parameters or return values. Most functional languages do have a feature called an <span class="linkgen">environment</span>, which allows the storage of some values, but generally you cannot change a value once it has been added to an environment. (In other words, environments values are <em>immutable</em>.) The overall goal is that in a functional language, you should never be able to call the same procedure with the same arguments twice and get two different results.
+                    </p>
+                    <p>
+                        Racket is not a purely functional language, and so it has functions like <code>set!</code> which allow you to modify environment values. By convention, all such functions which have the side effect of <em>mutating</em> (changing) some stored data have a "!" suffix in their name.
                     </p>
                 </li>
                 <li>
                     <p>
-                        Functions are a <strong>data type</strong>. They can be passed to one another as parameters and as return values, just like <strong>integers</strong> or <strong>strings</strong> or <strong>booleans</strong>. Other languages often have some limited implementation of this, often referred to as <strong>lambda expressions</strong>, but this is a central concept in functional programming. You will routinely encounter functions which produce other functions, functions which perform operations on functions, functions which apply functions to other functions, and many more bizarre configurations, so it's best to get used to this idea soon.
+                        Functions are a <strong>data type</strong>. They can be passed to one another as parameters and as return values, just like any other data type like <strong>integers</strong> or <strong>strings</strong> or <strong>booleans</strong>. Other languages often have some limited implementation of this, often referred to as <strong>lambda expressions</strong>, but this concept takes center stage in functional programming. You will routinely encounter functions which produce other functions, functions which perform operations on functions, functions which apply functions to other functions, and many more bizarre configurations, so it's best to get used to this idea soon.
                     </p>
                 </li>
             </ol>
@@ -294,6 +297,9 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             </li>
             <li>
                 Lisp Programming Language Guide - History-Computer. <a href="https://history-computer.com/lisp-programming-language-guide/">https://history-computer.com/lisp-programming-language-guide/</a>
+            </li>
+            <li>
+                Style Guide - Northeastern University, Khoury College of Computer Sciences, CS5010: Program Design Paradigms. <a href="https://course.ccs.neu.edu/cs5010sp15/style.html">https://course.ccs.neu.edu/cs5010sp15/style.html</a>
             </li>
             <li>
                 Racket Logo. <a href="https://racket-lang.org/img/racket-logo.svg">https://racket-lang.org/img/racket-logo.svg</a>

@@ -397,8 +397,10 @@ footer a:hover {
 }
 
 footer ul {
-    display: flex;
-    flex-flow: row wrap;
+    /* display: flex;
+    flex-flow: row wrap; */
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
     margin: auto;
     padding: 0;
     -moz-column-gap: 3em;
@@ -408,9 +410,22 @@ footer ul {
 
 footer ul li {
     text-align: left;
-    flex-basis: 300px;
-    flex-grow: 1;
     word-break: break-word;
+}
+
+/* Change number of columns in references based on screen width */
+@media screen and (min-width: 768px) {
+    footer ul {
+        grid-template-columns: repeat(2, 1fr);
+        
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    footer ul {
+        grid-template-columns: repeat(3, 1fr);
+        
+    }
 }
 
 /* Responsive nav menu */
