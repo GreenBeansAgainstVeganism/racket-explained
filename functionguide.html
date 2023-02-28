@@ -287,7 +287,7 @@ in general:
             <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._map%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
-                Map is one of the most fundamental operations that can be done with <span class="linkgen">procedures</span>. It takes procedure, and applies it in sequence to every member of a list, and then returns a list of the results in the same order.
+                Map is one of the most fundamental operations that can be done with <span class="linkgen">procedures</span>. Its name comes from the terminology of <strong>set theory</strong>, where a map refers to a type of <strong>relation</strong> between two sets where every member of the input set is associated with exactly one member of the output set, much like how we associate points on the Earth's surface with points on a flat page when we draw geographical maps. The map function takes a procedure, and applies it in sequence to every member of a list, and then returns a list of the results in the same order.
             </p>
             <figure>
                 <img src="./assets/figures/fig-map-1.svg" alt="An example expression, (map add1 '(0 2 6 8)), followed by a diagram showing how the input list of numbers are fed into the 'add1' function, represented as a box, and the corresponding outputs are sent to a new list, reading '(1 7 2 9).">
@@ -314,7 +314,20 @@ in general:
                 Map doesn't just work with procedures that have one input and one output. Notice the <code>...</code> in the function signature up above. Map can accept more than one input list, and if you supply additional ones, map will use them to fill in additional parameters in <code>proc</code>.
             </p>
             <figure>
-                <pre><code></code></pre>
+                <pre><code><span class="comment">; a function that takes two parameters </span>
+(* 4 3) <span class="note">-&gt; 12</span>
+
+<span class="comment">; calling map with two input lists</span>
+(map *
+     &apos;(2 5 7 3)
+     &apos;(8 4 3 9)) <span class="note">-&gt; &apos;(16 20 21 27)</span>
+
+<span class="comment">; map will throw an error if the input lists</span>
+<span class="comment">; don&apos;t all have the same number of elements</span>
+(map *
+     &apos;(2 5 7)
+     &apos;(8 4 3 9))
+<span class="error">-&gt; error: map: all lists must have the same size</span></code></pre>
             </figure>
         </section>
         <hr>
@@ -328,7 +341,7 @@ in general:
             <a href="https://docs.racket-lang.org/reference/pairs.html#%28def._%28%28lib._racket%2Fprivate%2Fmap..rkt%29._andmap%29%29" class="docs-link" target="_blank"></a>
             <h4>Main Overview</h4>
             <p>
-                These three functions are variants of the <span class="linkgen">map</span> function. Like map, they too run a given <span class="linkgen">procedure</span> on every element of a given <span class="linkgen">list</span> (or set of lists). However, rather than a list, these functions return a single value.
+                These three functions are variants of the <span class="linkgen">map</span> function. Like map, they too run a given <span class="linkgen">procedure</span> on every element of a given <span class="linkgen">list</span> (or set of lists). However, rather than a list, these functions combine the results of each call to <code>proc</code> to return a single value.
             </p>
             <p>
                 <strong>andmap</strong> will return true if and only if <code>proc</code> returns true for every element of the list, and false otherwise.
@@ -337,8 +350,104 @@ in general:
                 <strong>ormap</strong> will return true unless <code>proc</code> returns false for every element of the list, and false otherwise.
             </p>
             <p>
-                <strong>foldl</strong> is a more general form of this concept and we'll discuss it further down.
+                <strong>foldl</strong> is a more general form of this operation and we'll discuss it further down.
             </p>
+
+            <figure>
+                <pre><code><span class="comment">; verify that every element of a list is an integer</span>
+(andmap integer? &apos;(1 3 8 5 2)) <span class="note">-&gt; #t</span>
+(andmap integer? &apos;(1 3 8 4.1 2)) <span class="note">-&gt; #f</span>
+
+<span class="comment">; test if there exists an element of a list that is an integer</span>
+(ormap integer? &apos;(3.8 7.4 &quot;x&quot; #f 200.9)) <span class="note">-&gt; #f</span>
+(ormap integer? &apos;(3.8 8 &quot;x&quot; #f 200.9)) <span class="note">-&gt; #t</span>
+
+<span class="comment">; test if the elements of two lists sum to 15 in each place</span>
+(andmap (<span class="linkgen">lambda</span> (a b) (eq? (+ a b) 15))
+        &apos;(1 2 3 4)
+        &apos;(14 13 12 11)) <span class="note">-&gt; #t</span>
+
+<span class="comment">; andmap and ormap are useful in evaluating the "for all"</span>
+<span class="comment">; and "there exists" predicates of first order logic</span>
+
+<span class="comment">; Test a given list, lst, for the condition:</span>
+<span class="comment">; for all x in lst, there exists a, b in x for which a + b = 15</span>
+
+(andmap
+ (<span class="linkgen">lambda</span> (x)
+   (ormap
+    (<span class="linkgen">lambda</span> (a)
+      (ormap
+       (<span class="linkgen">lambda</span> (b)
+         (eq? (+ a b) 15))
+       x))
+    x))
+ lst)</code></pre>
+            </figure>
+            <h4>foldl</h4>
+            <p>
+                foldl is a more versatile form of <span class="linkgen">map</span>, andmap and ormap, giving you the freedom to specify how the values of the list(s) are combined. It takes an additional parameter called <code>init</code>. foldl starts from the left of the list (hence the "l") and calls <code>proc</code>, passing in the first element of the list along with <code>init</code> as parameters. It then passes the second element of the list along with the result of the first call to <code>proc</code> into the next call to <code>proc</code>, and then it passes the third element along with the result of that call into the next call, and on and on until it progresses through the whole list.
+            </p>
+            <p>
+                I find it easiest to imagine the flow of foldl as literally folding a brochure:
+            </p>
+            <figure>
+                <p>*image here*</p>
+            </figure>
+            <p>
+                foldl is a little less intuitive than the other functions in the <em>map</em> family, but it is incredibly powerful. Here are just a few examples of how it can be used:
+            </p>
+            <figure>
+                <pre><code><span class="comment">; implementing a sum function using foldl</span>
+(<span class="linkgen">define</span> (my-sum lst) (foldl + 0 lst))
+
+<span class="comment">; implementing a reverse function using foldl</span>
+(<span class="linkgen">define</span> (my-reverse lst) (foldl <span class="linkgen">cons</span> &apos;() lst))
+
+<span class="comment">; implementing a map function using foldl</span>
+(<span class="linkgen">define</span> (my-map proc lst) (foldl
+                           (<span class="linkgen">lambda</span> (a b)
+                             (append b (list (proc a))))
+                           &apos;()
+                           lst))
+
+<span class="comment">; implementing an andmap function using foldl</span>
+(<span class="linkgen">define</span> (my-andmap proc lst) (foldl
+                              (<span class="linkgen">lambda</span> (a b) (and (proc a) b))
+                              #t
+                              lst))
+
+<span class="comment">; implementing an ormap function using foldl</span>
+(<span class="linkgen">define</span> (my-ormap proc lst) (foldl
+                             (<span class="linkgen">lambda</span> (a b) (or (proc a) b))
+                             #f
+                             lst))
+
+<span class="comment">; in the English card game of Cribbage, part of scoring</span>
+<span class="comment">; a hand of cards involves counting the number of subsets of</span>
+<span class="comment">; cards in the hand whose values add up to 15.</span>
+
+<span class="comment">; Here is a Cribbage hand 15 counter using foldl:</span>
+(<span class="linkgen">define</span> (count-15s card-values)
+  (foldl
+   (<span class="linkgen">lambda</span> (sublist tally)
+     (if (eq? (foldl + 0 sublist) 15)
+         (add1 tally)
+         tally))
+   0
+   <span class="comment">; the combinations function returns all sublists of a list</span>
+   <span class="comment">; AKA it takes the powerset</span>
+   (combinations card-values)))
+
+<span class="comment">; a pretty average Cribbage hand</span>
+(count-15s &apos;(2 7 8 7 1 3 10)) <span class="note">-&gt; 4</span>
+
+<span class="comment">; the theoretical perfect hand</span>
+(count-15s &apos;(4 4 5 5 5 6 6)) <span class="note">-&gt; 13</span></code></pre>
+                <figcaption>
+                    There is also a <strong>foldr</strong> function, which, as you may have guessed, does the same thing as foldl but starts from the right of the list. It is unadvised to use foldr unless you have good reason, because it is actually more computationally expensive to iterate right-to-left through a list than it is to iterate left-to-right. This is because of the way lists are represented in Racket under the hood, which you can read about <a href="faq.html#what-are-pairs-and-lists">here</a>.
+                </figcaption>
+            </figure>
         </section>
         <hr>
         <h3 id="func-curry">curry</h3>
