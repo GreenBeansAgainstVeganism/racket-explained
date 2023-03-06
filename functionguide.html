@@ -389,7 +389,7 @@ in general:
                 foldl is a more versatile form of <span class="linkgen">map</span>, andmap and ormap, giving you the freedom to specify how the values of the list(s) are combined. It takes an additional parameter called <code>init</code>. foldl starts from the left of the list (hence the "l") and calls <code>proc</code>, passing in the first element of the list along with <code>init</code> as parameters. It then passes the second element of the list along with the result of the first call to <code>proc</code> into the next call to <code>proc</code>, and then it passes the third element along with the result of that call into the next call, and on and on until it progresses through the whole list.
             </p>
             <p>
-                I find it easiest to imagine the flow of foldl as literally folding a brochure:
+                I find it easiest to imagine the flow of foldl as if I was literally folding a brochure:
             </p>
             <figure>
                 <img src="./assets/figures/fig-foldl-1.svg" alt="foldl is like the process of folding a brochure">

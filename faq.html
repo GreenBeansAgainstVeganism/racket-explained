@@ -197,6 +197,32 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                     The apostrophe is actually a shorthand for the <code>quote</code> function. You can read about this topic in more detail <a href="https://docs.racket-lang.org/guide/quote.html">here</a>.
                 </figcaption>
             </figure>
+            <h4>Quasiquoting and Unquoting</h4>
+            <p>
+                Ever looked at a quoted list and said to yourself, "Wow, I wish I could write code in this list!" Well, first of all, that's a pretty weird wish, and second of all, you can! By using a backtick <kbd>`</kbd> instead of an apostrophe, you can create a <strong>quasiquote</strong>. This is a weaker form of quoting, which can be <em>undone</em> within the list using a comma, AKA an <strong>unquote</strong>. This allows you to specify a structure that overall is evaluated as a list, but has pieces within it which are meant to be interpreted as code. Here are some examples to illustrate:
+            </p>
+            <figure>
+                <pre><code>&grave;(1 2 3 ,(+ 2 2)) <span class="note">-&gt; &apos;(1 2 3 4)</span>
+
+(let ([x &apos;c]) &grave;(a b ,x d)) <span class="note">-&gt; &apos;(a b c d)</span>
+
+<span class="comment">; Nesting quasiquotes within quasiquotes?!</span>
+(let ([x 2])
+  &grave;(&grave;(1 2 3 ,(+ ,x ,x))
+    evaluates
+    to
+    (1 2 3 ,(+ x x))))
+<span class="note">-&gt; &apos;(&grave;(1 2 3 ,(+ 2 2)) evaluates to (1 2 3 4))</span></code></pre>
+            </figure>
+            <p>
+                There is also one final quoting operation at your disposal, which is called <strong>unquote-splicing</strong>. This is the same as regular unquoting, except that the contained expression must evaluate to a list, and that list will be spliced into the surrounding structure, as the name implies. The shorthand for this operation is <code>,@</code>.
+            </p>
+            <figure>
+                <pre><code>&grave;(1 2 3 ,@(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 4 5 6 7 8 9 10)</span></code></pre>
+            </figure>
+            <p>
+                Quasiquoting is one of those features that is not used very often, mostly because there are more readable and computationally efficient ways to accomplish the same thing with normal code, but it is helpful in a pinch if you're trying to assemble data into a particular structure and don't want to deal with writing an ocean of <code><span class="linkgen">cons</span></code>, <code>append</code> and <code>list</code> calls, or if you feel like flexing on the non-quasiquoting normies. 
+            </p>
         </section>
         <h3 id="what-is-a-closure">What is a closure?</h3>
         <section>
