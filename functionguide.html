@@ -392,7 +392,8 @@ in general:
                 I find it easiest to imagine the flow of foldl as literally folding a brochure:
             </p>
             <figure>
-                <p>*image here*</p>
+                <img src="./assets/figures/fig-foldl-1.svg" alt="foldl is like the process of folding a brochure">
+                <figcaption>The one inaccuracy with this image is that the result of the previous "fold" (or init in the first iteration) is passed as the right-most parameter to <code>proc</code>, rather than the left-most as depicted above.</figcaption>
             </figure>
             <p>
                 foldl is a little less intuitive than the other functions in the <em>map</em> family, but it is incredibly powerful. Here are just a few examples of how it can be used:

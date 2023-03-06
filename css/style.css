@@ -318,6 +318,12 @@ figcaption {
     margin-inline: 1em;
 }
 
+figcaption code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
 .docs-link {
     float: right;
     font-style: italic;
