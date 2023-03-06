@@ -218,7 +218,10 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 There is also one final quoting operation at your disposal, which is called <strong>unquote-splicing</strong>. This is the same as regular unquoting, except that the contained expression must evaluate to a list, and that list will be spliced into the surrounding structure, as the name implies. The shorthand for this operation is <code>,@</code>.
             </p>
             <figure>
-                <pre><code>&grave;(1 2 3 ,@(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 4 5 6 7 8 9 10)</span></code></pre>
+                <pre><code><span class="comment">; without splicing</span>
+&grave;(1 2 3 ,(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 (4 5 6 7) 8 9 10)</span>
+<span class="comment">; with splicing</span>
+&grave;(1 2 3 ,@(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 4 5 6 7 8 9 10)</span></code></pre>
             </figure>
             <p>
                 Quasiquoting is one of those features that is not used very often, mostly because there are more readable and computationally efficient ways to accomplish the same thing with normal code, but it is helpful in a pinch if you're trying to assemble data into a particular structure and don't want to deal with writing an ocean of <code><span class="linkgen">cons</span></code>, <code>append</code> and <code>list</code> calls, or if you feel like flexing on the non-quasiquoting normies. 
