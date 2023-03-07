@@ -61,6 +61,11 @@
                 <td>Runs every member of a list (or set of members from a set of lists) through a given procedure and returns the logical AND of all of the results together.</td>
             </tr>
             <tr>
+                <td><span class="linkgen">cond</span></td>
+                <td><span class="linkgen">any</span></td>
+                <td>Evaluates a conditional control flow.</td>
+            </tr>
+            <tr>
                 <td><span class="linkgen">cons</span></td>
                 <td><span class="linkgen">pair</span></td>
                 <td>Creates a new pair out of its two parameters.</td>
@@ -110,10 +115,10 @@
 
             <figure>
                 <pre><code>(cons 1 2) <span class="note">-&gt; &apos;(1 . 2)</span>
-(cons &apos;a &apos;b) <span class="note">-&gt; &apos;(a . b)</span>
-(cons 1 &apos;()) <span class="note">-&gt; &apos;(1)</span>
-(cons 1 &apos;(2 3)) <span class="note">-&gt; &apos;(1 2 3)</span>
-(cons &apos;(1 2) 3) <span class="note">-&gt; &apos;((1 2) . 3)</span></code></pre>
+(cons <span class="quote">&apos;a</span> <span class="quote">&apos;b</span>) <span class="note">-&gt; &apos;(a . b)</span>
+(cons 1 <span class="quote">&apos;()</span>) <span class="note">-&gt; &apos;(1)</span>
+(cons 1 <span class="quote">&apos;(2 3)</span>) <span class="note">-&gt; &apos;(1 2 3)</span>
+(cons <span class="quote">&apos;(1 2)</span> 3) <span class="note">-&gt; &apos;((1 2) . 3)</span></code></pre>
             </figure>
 
         </section><br>
@@ -142,7 +147,7 @@
 (<span class="highlight">(lambda (x) (+ x 5))</span> 8) <span class="note">-&gt; 13</span>
 
 <span class="comment">; Passing a procedure made with lambda as a parameter to another procedure</span>
-(<span class="linkgen">map</span> <span class="highlight">(lambda (x) (+ x 5))</span> '(1 2 3 4)) <span class="note">-&gt; '(6 7 8 9)</span></code></pre>
+(<span class="linkgen">map</span> <span class="highlight">(lambda (x) (+ x 5))</span> <span class="quote">&apos;(1 2 3 4)</span>) <span class="note">-&gt; '(6 7 8 9)</span></code></pre>
             </figure>
 
             <h4>Optional Parameters</h4>
@@ -207,7 +212,6 @@ public static var computeAverage(var x, var y)
     return (x + y) / 2.0;
 }
 
-<hr>
 <span class="comment">; in Racket, with lambda</span>
 (define compute-average <span class="highlight">(<span class="linkgen">lambda</span> (x y) (/ (+ x y) 2))</span>)
 
@@ -279,6 +283,52 @@ in general:
             </figure>
         </section>
         <hr>
+        <h3 id="func-cond">cond</h3>
+        <section>
+            <figure>
+                <pre class="sectionhead"><code>(cond [<em>test</em> <em>body</em> ...] ... [else <em>body</em> ...])</code></pre>
+            </figure>
+            <a href="https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29" class="docs-link" target="_blank"></a>
+            <h4>Main Overview</h4>
+            <p>
+                The name <em>cond</em> stands for <strong>conditional</strong>, and you can think of cond as Racket's version of an if/else chain. There is also the <code>if</code> function, but cond is usually preferred as it is more flexible. cond can be confusing at first because of its syntax, but once you get used to it, it's quite straightforward. It accepts any number of <em>clauses</em>, by convention indicated with square brackets, and each clause contains a test expression followed by any number of body expressions. Starting with the first and working its way down, cond evaluates the test expression of each clause. If the test returns true, the body for that clause is evaluated and its result is returned for the whole cond expression. If the test returns false, the body for that clause is ignored and cond continues to the next clause.
+            </p>
+            <p>
+                The final clause in a cond expression can optionally use the word "else" in place of a test expression, in which case the body is always evaluated as long as cond reaches that clause. There are actually 2 other types of clause which are accepted by cond, but they are seldom used. You can read about them in the <a href="https://docs.racket-lang.org/reference/if.html#%28form._%28%28lib._racket%2Fprivate%2Fletstx-scheme..rkt%29._cond%29%29" target="_blank">official docs page</a>.
+            </p>
+            <p>
+                I figure the easiest way to get a feel for the syntax of cond is to compare it to an identical control flow in a more familiar language. Here is an example of the same piece of code written in both Java and Racket:
+            </p>
+            <figure>
+                <pre><code><span class="comment">// Java</span>
+public static String aiChatBot(String prompt)
+{
+    if(prompt.equals(<span class="string">&quot;quit&quot;</span>))
+    {
+        return <span class="string">&quot;Goodbye!&quot;</span>;
+    }
+    else if(prompt.startsWith(<span class="string">&quot;how do i&quot;</span>))
+    {
+        return <span class="string">&quot;I am programmed not to answer questions like \&quot;&quot;</span>
+            .concat(prompt).concat(<span class="string">&quot;\&quot; for ethical reasons.&quot;</span>);
+    }
+    else
+    {
+        return <span class="string">&quot;I&apos;m not sure I understand. Please rephrase your question.&quot;</span>;
+    }
+}
+
+<span class="comment">; Racket</span>
+(<span class="linkgen">define</span> (ai-chat-bot prompt)
+  (cond
+    [(equal? prompt <span class="string">&quot;quit&quot;</span>) <span class="string">&quot;Goodbye!&quot;</span>]
+    [(string-prefix? prompt <span class="string">&quot;how do i&quot;</span>)
+     (string-append <span class="string">&quot;I am programmed not to answer questions like \&quot;&quot;</span>
+                    prompt <span class="string">&quot;\&quot; for ethical reasons.&quot;</span>)]
+    [else <span class="string">&quot;I&apos;m not sure I understand. Please rephrase your question.&quot;</span>]))</code></pre>
+            </figure>
+        </section>
+        <hr>
         <h3 id="func-map">map</h3>
         <section>
             <figure>
@@ -300,11 +350,11 @@ in general:
 (map sqr (range 10)) <span class="note">-&gt; &apos;(0 1 4 9 16 25 36 49 64 81)</span>
 
 <span class="comment">; Running a logical test on each element of a list</span>
-(map odd? &apos;(8 2 9 10 13 5 28)) <span class="note">-&gt; &apos;(#f #f #t #f #t #t #f)</span>
+(map odd? <span class="quote">&apos;(8 2 9 10 13 5 28)</span>) <span class="note">-&gt; &apos;(#f #f #t #f #t #t #f)</span>
 
 <span class="comment">; Appending a string to each element of a list of strings</span>
-(map (<span class="linkgen">lambda</span> (s) (string-append &quot;P&quot; s))
-     &apos;(&quot;ython&quot; &quot;erl&quot; &quot;HP&quot; &quot;ascal&quot; &quot;rolog&quot;))
+(map (<span class="linkgen">lambda</span> (s) (string-append <span class="string">&quot;P&quot;</span> s))
+     <span class="quote">&apos;(<span class="string">&quot;ython&quot;</span> <span class="string">&quot;erl&quot;</span> <span class="string">&quot;HP&quot;</span> <span class="string">&quot;ascal&quot;</span> <span class="string">&quot;rolog&quot;</span>)</span>)
 <span class="note">-&gt; &apos;(&quot;Python&quot; &quot;Perl&quot; &quot;PHP&quot; &quot;Pascal&quot; &quot;Prolog&quot;)</span></code></pre>
             </figure>
             <h4>
@@ -319,14 +369,14 @@ in general:
 
 <span class="comment">; calling map with two input lists</span>
 (map *
-     &apos;(2 5 7 3)
-     &apos;(8 4 3 9)) <span class="note">-&gt; &apos;(16 20 21 27)</span>
+     <span class="quote">&apos;(2 5 7 3)</span>
+     <span class="quote">&apos;(8 4 3 9)</span>) <span class="note">-&gt; &apos;(16 20 21 27)</span>
 
 <span class="comment">; map will throw an error if the input lists</span>
 <span class="comment">; don&apos;t all have the same number of elements</span>
 (map *
-     &apos;(2 5 7)
-     &apos;(8 4 3 9))
+     <span class="quote">&apos;(2 5 7)</span>
+     <span class="quote">&apos;(8 4 3 9)</span>)
 <span class="error">-&gt; error: map: all lists must have the same size</span></code></pre>
             </figure>
         </section>
@@ -355,17 +405,17 @@ in general:
 
             <figure>
                 <pre><code><span class="comment">; verify that every element of a list is an integer</span>
-(andmap integer? &apos;(1 3 8 5 2)) <span class="note">-&gt; #t</span>
-(andmap integer? &apos;(1 3 8 4.1 2)) <span class="note">-&gt; #f</span>
+(andmap integer? <span class="quote">&apos;(1 3 8 5 2)</span>) <span class="note">-&gt; #t</span>
+(andmap integer? <span class="quote">&apos;(1 3 8 4.1 2)</span>) <span class="note">-&gt; #f</span>
 
 <span class="comment">; test if there exists an element of a list that is an integer</span>
-(ormap integer? &apos;(3.8 7.4 &quot;x&quot; #f 200.9)) <span class="note">-&gt; #f</span>
-(ormap integer? &apos;(3.8 8 &quot;x&quot; #f 200.9)) <span class="note">-&gt; #t</span>
+(ormap integer? <span class="quote">&apos;(3.8 7.4 <span class="string">&quot;x&quot;</span> #f 200.9)</span>) <span class="note">-&gt; #f</span>
+(ormap integer? <span class="quote">&apos;(3.8 8 <span class="string">&quot;x&quot;</span> #f 200.9)</span>) <span class="note">-&gt; #t</span>
 
 <span class="comment">; test if the elements of two lists sum to 15 in each place</span>
 (andmap (<span class="linkgen">lambda</span> (a b) (eq? (+ a b) 15))
-        &apos;(1 2 3 4)
-        &apos;(14 13 12 11)) <span class="note">-&gt; #t</span>
+        <span class="quote">&apos;(1 2 3 4)</span>
+        <span class="quote">&apos;(14 13 12 11)</span>) <span class="note">-&gt; #t</span>
 
 <span class="comment">; andmap and ormap are useful in evaluating the "for all"</span>
 <span class="comment">; and "there exists" predicates of first order logic</span>
@@ -403,13 +453,13 @@ in general:
 (<span class="linkgen">define</span> (my-sum lst) (foldl + 0 lst))
 
 <span class="comment">; implementing a reverse function using foldl</span>
-(<span class="linkgen">define</span> (my-reverse lst) (foldl <span class="linkgen">cons</span> &apos;() lst))
+(<span class="linkgen">define</span> (my-reverse lst) (foldl <span class="linkgen">cons</span> <span class="quote">&apos;()</span> lst))
 
 <span class="comment">; implementing a map function using foldl</span>
 (<span class="linkgen">define</span> (my-map proc lst) (foldl
                            (<span class="linkgen">lambda</span> (a b)
                              (append b (list (proc a))))
-                           &apos;()
+                           <span class="quote">&apos;()</span>
                            lst))
 
 <span class="comment">; implementing an andmap function using foldl</span>
@@ -441,10 +491,10 @@ in general:
    (combinations card-values)))
 
 <span class="comment">; a pretty average Cribbage hand</span>
-(count-15s &apos;(2 7 8 7 1 3 10)) <span class="note">-&gt; 4</span>
+(count-15s <span class="quote">&apos;(2 7 8 7 1 3 10)</span>) <span class="note">-&gt; 4</span>
 
 <span class="comment">; the theoretical perfect hand</span>
-(count-15s &apos;(4 4 5 5 5 6 6)) <span class="note">-&gt; 13</span></code></pre>
+(count-15s <span class="quote">&apos;(4 4 5 5 5 6 6)</span>) <span class="note">-&gt; 13</span></code></pre>
                 <figcaption>
                     There is also a <strong>foldr</strong> function, which, as you may have guessed, does the same thing as foldl but starts from the right of the list. It is unadvised to use foldr unless you have good reason, because it is actually more computationally expensive to iterate right-to-left through a list than it is to iterate left-to-right. This is because of the way lists are represented in Racket under the hood, which you can read about <a href="faq.html#what-are-pairs-and-lists">here</a>.
                 </figcaption>
@@ -471,9 +521,9 @@ in general:
 
 (curry <span class="linkgen">cons</span>) <span class="note">-&gt; #&lt;procedure:curried:cons&gt;</span>
 
-(<span class="linkgen">cons</span> 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span>
+(<span class="linkgen">cons</span> 2 <span class="quote">&apos;(6)</span>) <span class="note">-&gt; &apos;(2 6)</span>
 
-((curry <span class="linkgen">cons</span>) 2 &apos;(6)) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
+((curry <span class="linkgen">cons</span>) 2 <span class="quote">&apos;(6)</span>) <span class="note">-&gt; &apos;(2 6)</span></code></pre>
             </figure>
 
             <p>
@@ -505,7 +555,7 @@ in general:
 <span class="comment">; true if there exists a set of 3 numbers in the list that form</span>
 <span class="comment">; a pythagorean triple (a^2 + b^2 = c^2).</span>
 (<span class="linkgen">define</span> (contains-pythagorean-triple? A)
-  (contains-pythagorean-triple?-helper A '()))
+  (contains-pythagorean-triple?-helper A <span class="quote">&apos;()</span>))
 
 <span class="comment">; We accomplish this by creating a helper function which does all</span>
 <span class="comment">; the real work and takes an additional parameter: "test-vals"</span>
@@ -515,7 +565,7 @@ in general:
 <span class="comment">; pretty standard algorithm for finding particular subsets of a</span>
 <span class="comment">; list of elements.</span>
 (<span class="linkgen">define</span> (contains-pythagorean-triple?-helper A test-vals)
-  (cond
+  (<span class="linkgen">cond</span>
     <span class="comment">; Once test-vals has amassed 3 elements, run them through</span>
     <span class="comment">; is-pythagorean-triple? and return the result.</span>
     [(= (length test-vals) 3)
@@ -543,7 +593,7 @@ in general:
   (let ([a-squared (* a a)]
         [b-squared (* b b)]
         [c-squared (* c c)])
-    (cond
+    (<span class="linkgen">cond</span>
       [(or
         (= (+ a-squared b-squared) c-squared)
         (= (+ c-squared a-squared) b-squared)
@@ -553,10 +603,10 @@ in general:
       )))
 
 <span class="comment">; Some example calls</span>
-(contains-pythagorean-triple? &apos;(3 4 5)) <span class="note">-&gt; #t</span>
-(contains-pythagorean-triple? &apos;(5 12 13)) <span class="note">-&gt; #t</span>
-(contains-pythagorean-triple? &apos;(3 4 6 8)) <span class="note">-&gt; #f</span>
-(contains-pythagorean-triple? &apos;(9 7 4 1 3 11 5)) <span class="note">-&gt; #t</span></code></pre>
+(contains-pythagorean-triple? <span class="quote">&apos;(3 4 5)</span>) <span class="note">-&gt; #t</span>
+(contains-pythagorean-triple? <span class="quote">&apos;(5 12 13)</span>) <span class="note">-&gt; #t</span>
+(contains-pythagorean-triple? <span class="quote">&apos;(3 4 6 8)</span>) <span class="note">-&gt; #f</span>
+(contains-pythagorean-triple? <span class="quote">&apos;(9 7 4 1 3 11 5)</span>) <span class="note">-&gt; #t</span></code></pre>
             </figure>
             <p>
                 Now, this code works just fine. It solves the problem at hand and pretty efficiently as well. However, it is a bit cumbersome having to keep track of this list of elements that we're testing. The following example shows the same function but utilizing curry. Notice how <code>test-vals</code> is nowhere to be seen; instead of having to manually keep track of the elements we're testing, we just immediately pass them into the curried version of <code>is-pythagorean-triple?</code>, which feels a lot cleaner.
@@ -572,7 +622,7 @@ in general:
    ))
 
 (<span class="linkgen">define</span> (contains-pythagorean-triple?-helper A <span class="highlight">curried-test</span>)
-  (cond
+  (<span class="linkgen">cond</span>
     <span class="comment">; Instead of that bulky expression from the previous example,</span>
     <span class="comment">; we just check whether curried-test has returned yet and pass</span>
     <span class="comment">; on the result if it has.</span>

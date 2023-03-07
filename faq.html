@@ -94,10 +94,12 @@ console.log(result);
 
 console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum + n));</code></pre>
         </section>
+        <hr>
         <h3 id="what-is-racket">What is Racket?</h3>
         <section>
             <p>Racket is a <span class="linkgen">functional programming</span> language which is a descendant of a language called <strong>Lisp</strong>. Its website lists its main use cases as web applications, math/statistics, and databases. One big feature that sets Racket apart from other related languages is its language module feature, (the little <code>#lang racket</code> that you see at the top of every program) which allows you to specify which flavor of the language you're using. Racket is really a collection of closely related languages all built from the same base language.</p>
         </section>
+        <hr>
         <h3 id="lisp-dialects">No actually, why are we talking about Racket? My class uses Scheme/Clojure/etc.</h3>
         <section>
             <p><strong>Scheme</strong>, <strong>Clojure</strong>, <strong><span class="linkgen">Racket</span></strong>, and a few others are all descendant languages of <strong>Lisp</strong>, which is the second-oldest high-level language still in popular use today (the first being <strong>FORTRAN</strong>). Clojure is the newest, created in 2007, while Racket came in 1995, Scheme in 1975 and Lisp back in 1958. They are all similar enough that the distinction won't matter for the purposes of this guide, however they do have some differences in available features. Lisp has a lot of different dialects/descendants that have sprung up over the years because the language is structured in a way that makes it easy to extend, i.e. create new language features using the original language.</p>
@@ -105,25 +107,31 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 Note that although these languages all share Lisp as an original ancestor, they are not necessarily descendants of each other. Racket is largely based off of Scheme, but Clojure is its own thing.
             </p>
         </section>
+        <hr>
         <h3 id="how-to-format">How should I format my Racket Code?</h3>
         <section>
             <p>
-                Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a condition expression. <strong>DrRacket</strong> will do most of the indenting work for you, (you can re-indent your whole file any time using <kbd>Ctrl</kbd> + <kbd>i</kbd>) so you just have to worry about where to put line breaks.
+                Take a look at the <a href="https://docs.racket-lang.org/style/Textual_Matters.html">style guide</a> for precise guidelines, but generally just format your code in a way that makes it most readable. Try to avoid putting too much code on one line, and line pieces up vertically when they are logically related, such as multiple clauses of a <span class="linkgen">cond</span> expression. <strong>DrRacket</strong> will do most of the indenting work for you, (you can re-indent your whole file any time using <kbd>Ctrl</kbd> + <kbd>i</kbd>) so you just have to worry about where to put line breaks.
+            </p>
+            <p>
+                Standard conventions suggest that you use <code>kebab-case</code> whenver naming things in Racket. Functions which return a boolean value should have a <code>?</code> at the end of their name, while functions which make changes to existing <span class="linkgen">environment</span> data should have a <code>!</code> at the end of their name.
             </p>
         </section>
+        <hr>
         <h3 id="what-is-a-procedure">What is a procedure?</h3>
         <section>
             <p>
                 The terms "procedure" and "function" are essentially interchangeable; they refer to the same thing except that the term "function" is typically used to describe a procedure which has been bound to an <span class="linkgen">identifier</span> in the <span class="linkgen">environment</span>.
             </p>
         </section>
+        <hr>
         <h3 id="what-is-an-environment">What is an environment?</h3>
         <section>
             <p>
                 An <strong>environment</strong> is a data structure which holds all the associations between names and values that your program is aware of at any given point. Everything that you can refer to by name, including functions and parameters all must be "bound" to that name first by registering a name/value pair in the environment. We typically refer to the names as <strong>identifiers</strong>.
             </p>
             <figure>
-                <pre><code>'((x 10) (y 4) (+ #&lt;procedure&gt;) (- #&lt;procedure&gt;))</code></pre>
+                <pre><code><span class="quote">&apos;((x 10) (y 4) (+ #&lt;procedure&gt;) (- #&lt;procedure&gt;))</span></code></pre>
                 <figcaption>A very simple environment containing two values and two functions.</figcaption>
             </figure>
             <p>
@@ -136,10 +144,11 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 Besides automatic binding, there are a limited number of special functions included in Racket that allow you to manually bind identifiers to values, such as <span class="linkgen">define</span> and <span class="linkgen">let</span>.
             </p>
         </section>
+        <hr>
         <h3 id="what-are-pairs-and-lists">What is that period in my list?</h3>
         <section>
             <figure>
-                <pre><code>(println (<span class="linkgen">cons</span> 'a 'b))
+                <pre><code>(println (<span class="linkgen">cons</span> <span class="quote">&apos;a</span> <span class="quote">&apos;b</span>))
 <span class="output">&gt; &apos;(a . b)</span></code></pre>
             </figure>
             <p>
@@ -151,10 +160,10 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 
             <figure>
                 <pre><code><span class="comment">; A list:</span>
-&apos;(a b c d e f g)
+<span class="quote">&apos;(a b c d e f g)</span>
 
 <span class="comment">; How it is actually represented:</span>
-&apos;(a . (b . (c . (d . (e . (f . (g . null)))))))</code></pre>
+<span class="quote">&apos;(a . (b . (c . (d . (e . (f . (g . null)))))))</span></code></pre>
                 <figcaption>Additional note: it follows that an empty list <code>'()</code> is actually equivalent to <code>null</code>.</figcaption>
             </figure>
 
@@ -163,11 +172,12 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             </p>
 
             <figure>
-                <pre><code>(<span class="linkgen">cons</span> &apos;a &apos;(b c)) <span class="note">-&gt; &apos;(a . (b c)) -&gt; &apos;(a b c)</span>
+                <pre><code>(<span class="linkgen">cons</span> <span class="quote">&apos;a</span> <span class="quote">&apos;(b c)</span>) <span class="note">-&gt; &apos;(a . (b c)) -&gt; &apos;(a b c)</span>
 
-(<span class="linkgen">cons</span> &apos;(a b) &apos;c) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
+(<span class="linkgen">cons</span> <span class="quote">&apos;(a b)</span> <span class="quote">&apos;c</span>) <span class="note">-&gt; &apos;((a b) . c)</span></code></pre>
             </figure>
         </section>
+        <hr>
         <h3 id="what-is-quoting">Why do I have to put an apostrophe before lists and symbols?</h3>
         <section>
             <p>
@@ -181,17 +191,17 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 
 (println x)
 <span class="output">&gt; 3</span>
-(println &apos;x)
+(println <span class="quote">&apos;x</span>)
 <span class="output">&gt; &apos;x</span>
 
 (println (/ 12 x))
 <span class="output">&gt; 4</span>
-(println &apos;(/ 12 x))
+(println <span class="quote">&apos;(/ 12 x)</span>)
 <span class="output">&gt; &apos;(/ 12 x)</span>
 
 <span class="comment">; You do NOT have to quote anything that is enclosed in a larger</span>
 <span class="comment">; list/pair because they are already being interpreted as data</span>
-(println &apos;(a (b c)))
+(println <span class="quote">&apos;(a (b c))</span>)
 <span class="output">&gt; &apos;(a (b c))</span></code></pre>
                 <figcaption>
                     The apostrophe is actually a shorthand for the <code>quote</code> function. You can read about this topic in more detail <a href="https://docs.racket-lang.org/guide/quote.html">here</a>.
@@ -202,31 +212,32 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 Ever looked at a quoted list and said to yourself, "Wow, I wish I could write code in this list!" Well, first of all, that's a pretty weird wish, and second of all, you can! By using a backtick <kbd>`</kbd> instead of an apostrophe, you can create a <strong>quasiquote</strong>. This is a weaker form of quoting, which can be <em>undone</em> within the list using a comma, AKA an <strong>unquote</strong>. This allows you to specify a structure that overall is evaluated as a list, but has pieces within it which are meant to be interpreted as code. Here are some examples to illustrate:
             </p>
             <figure>
-                <pre><code>&grave;(1 2 3 ,(+ 2 2)) <span class="note">-&gt; &apos;(1 2 3 4)</span>
+                <pre><code><span class="quote">&grave;(1 2 3 </span>,(+ 2 2)<span class="quote">)</span> <span class="note">-&gt; &apos;(1 2 3 4)</span>
 
-(let ([x &apos;c]) &grave;(a b ,x d)) <span class="note">-&gt; &apos;(a b c d)</span>
+(let ([x <span class="quote">&apos;c</span>]) <span class="quote">&grave;(a b </span>,x<span class="quote"> d)</span>) <span class="note">-&gt; &apos;(a b c d)</span>
 
 <span class="comment">; Nesting quasiquotes within quasiquotes?!</span>
 (let ([x 2])
-  &grave;(&grave;(1 2 3 ,(+ ,x ,x))
+  <span class="quote">&grave;(&grave;(1 2 3 ,(+ </span>,x ,x<span class="quote">))
     evaluates
     to
-    (1 2 3 ,(+ x x))))
+    (1 2 3</span>,(+ x x)<span class="quote">))</span>)
 <span class="note">-&gt; &apos;(&grave;(1 2 3 ,(+ 2 2)) evaluates to (1 2 3 4))</span></code></pre>
             </figure>
             <p>
-                There is also one final quoting operation at your disposal, which is called <strong>unquote-splicing</strong>. This is the same as regular unquoting, except that the contained expression must evaluate to a list, and that list will be spliced into the surrounding structure, as the name implies. The shorthand for this operation is <code>,@</code>.
+                There is also one final quoting operation at your disposal, which is called <strong>unquote-splicing</strong>. This is the same as regular unquoting, except that the contained expression must evaluate to a list, and the contents of that list will be spliced into the surrounding structure, as the name implies. The shorthand for this operation is <code>,@</code>.
             </p>
             <figure>
                 <pre><code><span class="comment">; without splicing</span>
-&grave;(1 2 3 ,(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 (4 5 6 7) 8 9 10)</span>
+<span class="quote">&grave;(1 2 3 ,(list 4 5 6 7) 8 9 10)</span> <span class="note">-&gt; &apos;(1 2 3 (4 5 6 7) 8 9 10)</span>
 <span class="comment">; with splicing</span>
-&grave;(1 2 3 ,@(list 4 5 6 7) 8 9 10) <span class="note">-&gt; &apos;(1 2 3 4 5 6 7 8 9 10)</span></code></pre>
+<span class="quote">&grave;(1 2 3 ,@(list 4 5 6 7) 8 9 10)</span> <span class="note">-&gt; &apos;(1 2 3 4 5 6 7 8 9 10)</span></code></pre>
             </figure>
             <p>
                 Quasiquoting is one of those features that is not used very often, mostly because there are more readable and computationally efficient ways to accomplish the same thing with normal code, but it is helpful in a pinch if you're trying to assemble data into a particular structure and don't want to deal with writing an ocean of <code><span class="linkgen">cons</span></code>, <code>append</code> and <code>list</code> calls, or if you feel like flexing on the non-quasiquoting normies. 
             </p>
         </section>
+        <hr>
         <h3 id="what-is-a-closure">What is a closure?</h3>
         <section>
             <p>
@@ -241,13 +252,13 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
 <span class="comment">; appends that prefix to a given name.</span>
 (<span class="linkgen">define</span>
   (add-prefix <span class="highlight">prefix</span>)
-  (<span class="linkgen">lambda</span> (name) (string-append <span class="highlight">prefix</span> " " name)))
+  (<span class="linkgen">lambda</span> (name) (string-append <span class="highlight">prefix</span> <span class="string">&quot; &quot;</span> name)))
 
 <span class="comment">; Using add-prefix to define a new function called add-dr</span>
-(<span class="linkgen">define</span> add-dr (add-prefix "Dr."))
+(<span class="linkgen">define</span> add-dr (add-prefix <span class="string">&quot;Dr.&quot;</span>))
 
 <span class="comment">; using add-dr to add the prefix to a name</span>
-(add-dr "Racket") <span class="note">-&gt; &quot;Dr. Racket&quot;</span></code></pre>
+(add-dr <span class="string">&quot;Racket&quot;</span>) <span class="note">-&gt; &quot;Dr. Racket&quot;</span></code></pre>
             </figure>
             <p>
                 Did you notice something about the <span class="linkgen">lambda</span> expression up above? That's right, it uses the <span class="linkgen">identifier</span> <code>prefix</code>, even though that identifier is not defined within the lambda expression; it's defined right before as a parameter to add-prefix. In other programming languages, this would be impossible! (At least how it's depicted here. You could achieve a similar situation with classes in an object-oriented language.) However, because we can define new procedures/functions smack dab in the middle of an expression, it makes sense that they should be able to use identifiers from their surrounding context. That lambda expression is what we refer to as a closure.
@@ -278,7 +289,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 <pre><code>(define self-delete
   (lambda ()
     (set! self-delete null)
-    (println "hi!")))
+    (println <span class="string">&quot;hi!&quot;</span>)))
 
 (self-delete)
 <span class="output">&gt; hi!</span>
@@ -294,10 +305,10 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
             </p>
             <figure>
                 <pre><code><span class="comment">; This is a string</span>
-"Hello World!"
+<span class="string">&quot;Hello World!&quot;</span>
 
 <span class="comment">; This is a symbol</span>
-'Hello-World!</code></pre>
+<span class="quote">&apos;Hello-World!</span></code></pre>
             </figure>
             <p>
                 Besides the fact that symbols <strong>cannot contain whitespace characters</strong>, there are two main differences that set these data types apart.
@@ -309,7 +320,7 @@ console.log([1,2,3,4,5,6,7,8,9,10].map(n =&gt; n * n).reduce((sum,n) =&gt; sum +
                 The second is their usage. While strings are used to handle and manipulate display text, like in most applications, symbols are typically used to handle specifically the names and <span class="linkgen">identifiers</span> of things within the language. For example, the <code>mode</code> and <code>exists</code> flags for the <a href="https://docs.racket-lang.org/reference/file-ports.html#%28def._%28%28lib._racket%2Fprivate%2Fbase..rkt%29._open-output-file%29%29">open-output-file</a> function, which might be specified with an <strong>enum</strong> object in other languages, are specified with symbols. Also, symbols are used to represent identifiers of values and functions when parsing code from data.
             </p>
             <figure>
-                <pre><code>(eval '(+ 2 3)) <span class="note">-&gt; 5</span></code></pre>
+                <pre><code>(eval <span class="quote">&apos;(+ 2 3)</span>) <span class="note">-&gt; 5</span></code></pre>
                 <figcaption>The + is a symbol in this expression, but it's interpreted by <code>eval</code> to represent the + function.</figcaption>
             </figure>
         </section>

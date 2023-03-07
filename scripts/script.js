@@ -48,6 +48,7 @@ window.addEventListener('load', () => {
         define: 'functionguide.html#func-define',
         map: 'functionguide.html#func-map',
         cons: 'functionguide.html#func-cons',
+        cond: 'functionguide.html#func-cond',
         curry: 'functionguide.html#func-curry',
         andmap: 'functionguide.html#func-andmap',
         ormap: 'functionguide.html#func-andmap',

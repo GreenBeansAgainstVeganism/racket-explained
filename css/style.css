@@ -354,6 +354,14 @@ figcaption code {
     border-radius: 3px;
 }
 
+.string {
+    color: #bb9153;
+}
+
+.quote {
+    color: #4e9dc7;
+}
+
 kbd {
     padding: 3px;
     border-radius: 5px;
