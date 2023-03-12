@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
 
     // Necessary event listener to make the side menu work with touch devices
     document.body.addEventListener('touchend', ev => {
-        pageNav.classList.toggle('active',pageNav.contains(ev.target));
+        if(pageNav) pageNav.classList.toggle('active',pageNav.contains(ev.target));
     })
 
     if (pageNavLinks != null)
